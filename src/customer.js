@@ -1,5 +1,5 @@
 import React from "react";
-import "./timeline.css";
+
 
 const Customer = ({
   style = {
