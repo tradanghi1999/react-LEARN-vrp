@@ -1,6 +1,6 @@
 import React from "react";
 
-const LateStart = () => {
+const LateStart = ({ style, data }) => {
   return <div>Hello Iam Late Start</div>;
 };
 
