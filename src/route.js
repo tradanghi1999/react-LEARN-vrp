@@ -3,8 +3,8 @@ import Depot from "./depot";
 import End from "./end";
 import Customer from "./customer";
 import TimeTravel from "./timetravel";
-import Capacity from "./capacity";
 import LateStart from "./late_start";
+import PropTypes from "prop-types";
 
 class Route extends React.Component {
   render() {

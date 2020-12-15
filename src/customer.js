@@ -16,7 +16,7 @@ const Customer = props => {
         color: style.color
       }}
     >
-      <div className="rt-cus-name">{data.name}</div>
+      <div className="rt-cus-name noselect">{data.name}</div>
     </div>
   );
 };

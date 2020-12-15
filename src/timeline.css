@@ -238,7 +238,7 @@
 }
 
 .routing-container {
-  min-height: 55px;
+  max-height: 50px;
 }
 
 .routing-container,
