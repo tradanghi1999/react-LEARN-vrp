@@ -5,6 +5,12 @@ const ajax = {
       url: url,
       dataType: "xml"
     });
+  },
+  getJson(url) {
+    return $.ajax({
+      url: url,
+      dataType: "json"
+    });
   }
 };
 
