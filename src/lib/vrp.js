@@ -1,7 +1,6 @@
-const VRP = {
-  import(db, ids, vehicles) {
+const vrp = {
+  import(db, vehicles) {
     this.orders = db;
-    this.ids = ids;
     this.vehicles = vehicles;
   },
   getRoutific: function(routes) {
@@ -168,7 +167,7 @@ const VRP = {
   },
   run() {
     let orders1 = this.orders;
-    let idDepot = this.ids[0].id;
+    let idDepot = this.orders[0].id;
     let weight_limit = this.vehicles.weight_limit;
 
     const routeIndex = this.funcIndexRoute(idDepot, weight_limit, -1, orders1);
@@ -177,5 +176,5 @@ const VRP = {
   }
 };
 
-export default VRP;
+export default vrp;
 //day la code vrp cua thang

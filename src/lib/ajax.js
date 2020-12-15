@@ -14,13 +14,14 @@ const ajax = {
   },
   getDb(url) {
     return this.getJson(url)
-      .then(async data => data.orders)
+      .then(async data => data.data)
       .then(async db =>
         db.map(item => {
           let x = {};
           x.id = item.id;
           x.distances = item.distances;
           x.timetravels = item.timeTravels;
+          
 
           let order = {};
           order.weight = item.order.weight;
