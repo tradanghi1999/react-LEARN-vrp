@@ -10,6 +10,7 @@ class Route extends React.Component {
   render() {
     return (
       <div className="rt-container">
+        <LateStart />
         <Depot />
         <TimeTravel />
         <Customer />
