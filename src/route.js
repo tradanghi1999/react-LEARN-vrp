@@ -12,6 +12,8 @@ class Route extends React.Component {
     return (
       <div class="rt-container">
         <Depot />
+        <Driver />
+        <Customer/>
         <End />
       </div>
     );

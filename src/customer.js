@@ -1,16 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-
-const Customer = ({
-  style = {
-    color: "#000",
-    widthRatio: 100
-  },
-  data
-}) => {
+const Customer = props => {
+  const { style, data } = props;
   let width =
-    (data == null || data.ServiceTime <= 0 ? 0.01 : data.ServiceTime) *
-    (style.widthRatio == null ? 100 : style.widthRatio);
+    (data.ServiceTime <= 0 ? 0.01 : data.ServiceTime) * style.widthRatio;
   //console.log(width);
 
   return (
@@ -18,13 +12,29 @@ const Customer = ({
       className={width > 50 ? "rt-cus" : "rt-cus rt-cus-mini"}
       style={{
         width: width + "px",
-        borderColor: style.color != null ? style.color : "#000",
-        color: style.color != null ? style.color : "#000"
+        borderColor: style.color,
+        color: style.color
       }}
     >
-      <div class="rt-cus-name">{data == null ? "" : data.name}</div>
+      <div class="rt-cus-name">{data.name}</div>
     </div>
   );
+};
+
+Customer.propTypes = {
+  style: PropTypes.element.isRequired,
+  data: PropTypes.element.isRequired
+};
+
+Customer.defaultProps = {
+  style: {
+    color: "#000",
+    widthRatio: 100
+  },
+  data: {
+    ServiceTime: 0,
+    name: "Anh Hieu"
+  }
 };
 
 export default Customer;
