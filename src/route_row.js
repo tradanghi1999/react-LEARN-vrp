@@ -20,4 +20,12 @@ class RouteRow extends React.Component {
   }
 }
 
+RouteRow.defaultProps = {
+  style: {
+    color: "#000",
+    widthRatio: 100
+  },
+  
+};
+
 export default RouteRow;

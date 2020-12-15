@@ -1,5 +1,9 @@
 const interleave = (array1, array2) => {
-  result = array1.map((element, index) => [element, array2[index]]).flat();
+  return array1.map((element, index) => [element, array2[index]]).flat();
+};
+
+const utils = {
+  
 };
 
 export default interleave;

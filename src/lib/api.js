@@ -3,6 +3,8 @@ import { map } from "rxjs/operators";
 import ajax from "./ajax";
 import routific from "./routific";
 import vrp from "./vrp";
+import time from "./time";
+import interleave from "./utils";
 
 // du lieu goc
 const customer_url = "https://mwg-vrp.herokuapp.com/api/getCustomers";
@@ -44,14 +46,85 @@ const API = {
       map(([orders, vehicles, customers]) => {
         vrp.import(orders, vehicles);
         let routes = vrp.run();
-        return [orders, routes, customers];
+        return [orders, routes, customers, vehicles];
       }),
-      map(([orders, routes, customers]) => {
-        return routes.map(function(r, i) {
+      map(([orders, routes, customers, vehicles]) => {
+        let pointOnRoutes = routes.map(function(r, i) {
           return r.map(function(n, j) {
-            
+            switch (j) {
+              case 0:
+                return {
+                  type: "point",
+                  subtype: "depot"
+                };
+              case r.length - 1:
+                return {
+                  type: "point",
+                  subtype: "end"
+                };
+              default:
+                return {
+                  type: "point",
+                  subtype: "customer",
+                  data: {
+                    id: orders[n].id,
+                    name: customers.filter(x => x.id == orders[n].id)[0].name,
+                    service_time: orders[n].order.ServiceTime,
+                    weight: orders[n].order.weight
+                  }
+                };
+            }
           });
         });
+
+        let timeTravelsOnRoutes = routes.map(function(r, i) {
+          return r
+            .map(function(n, j) {
+              switch (j) {
+                case r.length - 1:
+                  return {
+                    type: "link",
+                    data: {
+                      time_text: "0",
+                      time_value: -1,
+                      start_point: r.length - 1,
+                      end_point: -1
+                    }
+                  };
+                default:
+                  return {
+                    type: "link",
+                    data: {
+                      time_text: time.getTimeText(
+                        orders[n].timetravels[r[j + 1]]
+                      ),
+                      time_value: orders[n].timetravels[r[j + 1]],
+                      start_point: n,
+                      end_point: r[j + 1]
+                    }
+                  };
+              }
+            })
+            .filter(x => x.data.time_value != -1);
+        });
+
+        let rG = routes.map(function(r, i) {
+          return interleave(pointOnRoutes[i], timeTravelsOnRoutes[i]).filter(
+            function(n, j) {
+              if (n == null) return false;
+              return true;
+            }
+          );
+        });
+
+        let rRG = rG.map(x => {
+          return {
+            weight_limit: vehicles.weight_limit,
+            routeG: x
+          };
+        });
+
+        return rRG;
       })
     );
     return result$;

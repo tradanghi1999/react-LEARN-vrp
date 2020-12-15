@@ -13,7 +13,9 @@ LateStart.defaultProps = {
     widthRatio: 100
   },
   data: {
-    time_value: 0.25
+    time_value: 0.25,
+    time_value_min: 0,
+    time_value_max: 0.5
   }
 };
 
