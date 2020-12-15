@@ -29,6 +29,8 @@
   width: 80%;
   flex-wrap: nowrap;
   overflow-y: hidden;
+  /*  */
+  padding: 28px 0;
 }
 
 .rt-depot {

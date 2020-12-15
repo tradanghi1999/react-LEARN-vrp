@@ -33,7 +33,7 @@ Customer.defaultProps = {
   },
   data: {
     ServiceTime: 0,
-    name: "Anh Hieu"
+    name: "Nghiay"
   }
 };
 
