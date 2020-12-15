@@ -1,21 +1,28 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Capacity = ({ data }) => {
+const Capacity = props => {
+  const { data } = props;
   return (
     <div class="capacity-container">
-      <div class="capacity-percentage">
-        <div
-          class="present"
-          style={{ width: data == null ? 0 : data.percentage + "%" }}
-        />
-        <div class="expected" style={{ width: 0 + "%" }} />
+      <div className="capacity-percentage">
+        <div className="present" style={{ width: data.percentage + "%" }} />
+        <div className="expected" style={{ width: 0 + "%" }} />
       </div>
-      <div class="capacity-number">
-        <div class="present">{(data == null ? 0 : data.percentage) + "%"}</div>
-        <div class="add" />
+      <div className="capacity-number">
+        <div className="present">{data.percentage + "%"}</div>
+        <div className="add" />
       </div>
     </div>
   );
+};
+Capacity.propTypes = {
+  data: PropTypes.element.isRequired
+};
+Capacity.defaultProps = {
+  data: {
+    percentage: 0
+  }
 };
 
 export default Capacity;
