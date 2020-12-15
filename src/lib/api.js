@@ -36,27 +36,22 @@ const API = {
   },
   getServerCordinatingResult() {
     // sau nay co the can fix lai de phu hop hon kq tu server
-
-    let routesP = new Promise(function(resolve, reject) {});
-
     let result$ = forkJoin(
       this.getOrders(),
       this.getVehicles(),
       this.getCustomers()
     ).pipe(
       map(([orders, vehicles, customers]) => {
-        //vrp.import(orders, vehicles);
-        //let routes = vrp.run();
-        //routific.import(orders, customers, routes);
-        //return orders
-        // let timeTravelOnRoutes = routes.map(function(x, i) {
-        //   return routific.getTimeTravelsOnRoute(i);
-        // });
-        // let serviceTimeOnRoutes = routes.map(function(x, i) {
-        //   return routific.getServiceTimesOnRoute(i);
-        // });
-
-        return orders;
+        vrp.import(orders, vehicles);
+        let routes = vrp.run();
+        return [orders, routes, customers];
+      }),
+      map(([orders, routes, customers]) => {
+        return routes.map(function(r, i) {
+          return r.map(function(n, j) {
+            
+          });
+        });
       })
     );
     return result$;
