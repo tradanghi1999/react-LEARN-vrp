@@ -327,6 +327,14 @@
   padding: 0px 5px;
 }
 
+late_start {
+  height: 10px;
+}
+
+late_start:hover {
+  background-color: whitesmoke;
+  cursor: pointer;
+}
 /* .rt-manual :nth-child(2n) {
     background-color: white;
 }

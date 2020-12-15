@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Customer = props => {
   const { style, data } = props;
   let width =
-    (data.ServiceTime <= 0 ? 0.01 : data.ServiceTime) * style.widthRatio;
+    (data.service_time <= 0 ? 0.01 : data.service_time) * style.widthRatio;
   //console.log(width);
 
   return (
@@ -32,9 +32,11 @@ Customer.defaultProps = {
     widthRatio: 100
   },
   data: {
-    ServiceTime: 0,
-    name: "Nghiay"
+    service_time: 0,
+    name: "Nghiay",
+    id: 0
   }
 };
+// co the them id order
 
 export default Customer;

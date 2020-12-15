@@ -4,7 +4,7 @@ const LateStart = props => {
   const { style, data } = props;
   let width =
     (data.time_value <= 0 ? 0.01 : data.time_value) * style.widthRatio;
-  return <div style={{ width: width + "px" }} />;
+  return <div className="late_start" style={{ width: width + "px" }} />;
 };
 
 LateStart.defaultProps = {
