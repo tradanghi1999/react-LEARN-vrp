@@ -1,4 +1,5 @@
 import { from } from "rxjs";
+import { map } from "rxjs/operators";
 import ajax from "./ajax";
 
 const customer_url = "https://mwg-vrp.herokuapp.com/api/getCustomers";
@@ -11,7 +12,9 @@ const API = {
     return customer$;
   },
   getOrders() {
-    let order$ = from(ajax.getJson(order_url));
+    let order$ = from(ajax.getJson(order_url)).pipe(
+      map(data => data),
+      );
     return order$;
   }
 };
