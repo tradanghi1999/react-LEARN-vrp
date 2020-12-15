@@ -5,6 +5,7 @@ import "./timeline.css";
 import "./antd.css";
 import API from "./lib/api";
 export default function App() {
+  API.getServerCordinatingResult().subscribe(console.log)
   return (
     <div>
       <h1>Hello StackBlitz!</h1>

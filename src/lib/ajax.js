@@ -11,6 +11,28 @@ const ajax = {
       url: url,
       dataType: "json"
     });
+  },
+  getDb(url) {
+    return this.getJson(url)
+      .then(async data => data.orders)
+      .then(async db =>
+        db.map(item => {
+          let x = {};
+          x.id = item.id;
+          x.distances = item.distances;
+          x.timetravels = item.timeTravels;
+
+          let order = {};
+          order.weight = item.order.weight;
+          order.long = item.order.long;
+          order.lat = item.order.lat;
+          order.ServiceTime = item.order.serviceTime;
+          order.timeWindow = item.order.timeWindow;
+
+          x.order = order;
+          return x;
+        })
+      );
   }
 };
 
