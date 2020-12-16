@@ -8,12 +8,12 @@ const Capacity = props => {
       <div className="capacity-percentage">
         <div
           className="present"
-          style={{ width: data.percentage.toFixed(0) + "%" }}
+          style={{ width: data.percentage + "%" }}
         />
         <div className="expected" style={{ width: 0 + "%" }} />
       </div>
       <div className="capacity-number">
-        <div className="present">{data.percentage + "%"}</div>
+        <div className="present">{data.percentage.toFixed(0) + "%"}</div>
         <div className="add" />
       </div>
     </div>
