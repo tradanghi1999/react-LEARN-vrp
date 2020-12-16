@@ -4,24 +4,37 @@ import RouteTable from "./route_tbl";
 import "./timeline.css";
 import "./antd.css";
 import API from "./lib/api";
+
 class App extends React.Component {
   state = {
     isLoading: true,
     data: null
   };
   componentDidMount() {
-    API.getServerCordinatingResult().subscribe(data => {});
+    API.getServerCordinatingResult().subscribe(data => {
+      this.setState({
+        isLoading: false,
+        data: data
+      });
+    });
   }
   render() {
-    return (
-      <div>
+    const { isLoading, data } = this.state;
+    if(isLoading)
+      return(
+        <div>
         <h1>Hello StackBlitz!</h1>
         <p>Start editing to see some magic happen :)</p>
-        <RouteTable data={data} />
       </div>
-    );
+      );
+    return(
+      <RouteTable data={data}/>
+    )
+    
   }
 }
+
+export default App;
 
 //
 //<Depot />
