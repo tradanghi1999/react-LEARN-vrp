@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Driver = ({ data }) => {
+const Driver = props => {
+  const { data } = props;
   return (
     <div className="dr-container">
       <div className="dr-name">{data.name}</div>
@@ -22,7 +23,5 @@ Driver.defaultProps = {
     totalToday: 0
   }
 };
-
-
 
 export default Driver;
