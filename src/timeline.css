@@ -30,7 +30,8 @@
   flex-wrap: nowrap;
   overflow-y: hidden;
   /*  */
-  padding: 25px 0;
+
+  min-height: 60px;
 }
 
 .rt-depot {
@@ -238,7 +239,7 @@
 }
 
 .routing-container {
-  max-height: 50px;
+  height: 60px;
 }
 
 .routing-container,
