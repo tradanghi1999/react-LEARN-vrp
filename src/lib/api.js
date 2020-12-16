@@ -4,7 +4,7 @@ import ajax from "./ajax";
 import routific from "./routific";
 import vrp from "./vrp";
 import time from "./time";
-import interleave from "./utils";
+import utils from "./utils";
 
 // du lieu goc
 const customer_url = "https://mwg-vrp.herokuapp.com/api/getCustomers";
@@ -109,12 +109,12 @@ const API = {
         });
 
         let rG = routes.map(function(r, i) {
-          return interleave(pointOnRoutes[i], timeTravelsOnRoutes[i]).filter(
-            function(n, j) {
+          return utils
+            .interleave(pointOnRoutes[i], timeTravelsOnRoutes[i])
+            .filter(function(n, j) {
               if (n == null) return false;
               return true;
-            }
-          );
+            });
         });
 
         let rRG = rG.map((x, i) => {

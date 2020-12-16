@@ -5,6 +5,8 @@ import "./timeline.css";
 import "./antd.css";
 import API from "./lib/api";
 
+import Timeline from "./component/timeline.js";
+
 class App extends React.Component {
   state = {
     isLoading: true,
@@ -20,17 +22,17 @@ class App extends React.Component {
   }
   render() {
     const { isLoading, data } = this.state;
-    if(isLoading)
-      return(
+    if (isLoading)
+      return (
         <div>
-        <h1>Hello StackBlitz!</h1>
-        <p>Start editing to see some magic happen :)</p>
-      </div>
+          <h1>Hello StackBlitz!</h1>
+          <p>Start editing to see some magic happen :)</p>
+        </div>
       );
-    return(
-      <RouteTable data={data}/>
-    )
-    
+    return <React.Fragment>
+    <RouteTable data={data} />
+    <Timeline/>
+    </React.Fragment>;
   }
 }
 
