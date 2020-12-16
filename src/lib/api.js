@@ -119,16 +119,16 @@ const API = {
 
         let rRG = rG.map((x, i) => {
           return {
-            capacity_percentage: (
-              pointOnRoutes[i]
-                .filter(x => x.subtype == "customer")
-                .map(x => x.data.weight)
-                .reduce((a, b) => a + b) / vehicles.weight_limit
-            ).toFixed(2),
+            capacity_percentage: pointOnRoutes[i]
+              .filter(x => x.subtype == "customer")
+              .map(x => x.data.weight)
+              .reduce((a, b) => a + b)
+              // vehicles.weight_limit
+              .toFixed(2),
             routeG: x
           };
         });
-
+        console.log(pointOnRoutes);
         return rRG;
       })
     );
