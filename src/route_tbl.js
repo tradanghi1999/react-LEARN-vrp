@@ -24,7 +24,7 @@ RouteTable.defaultProps = {
   style: {
     colors: [
       "#1f77b4",
-      "#aec7e8",
+      "#3a649b", // da sua
       "#ff7f0e",
       "#ffbb78",
       "#2ca02c",
