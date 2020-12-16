@@ -6,10 +6,7 @@ const Capacity = props => {
   return (
     <div className="capacity-container">
       <div className="capacity-percentage">
-        <div
-          className="present"
-          style={{ width: data.percentage + "%" }}
-        />
+        <div className="present" style={{ width: data.percentage + "%" }} />
         <div className="expected" style={{ width: 0 + "%" }} />
       </div>
       <div className="capacity-number">
