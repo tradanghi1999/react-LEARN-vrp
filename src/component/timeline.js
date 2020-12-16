@@ -2,13 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import d3 from "d3";
 import moment from "moment";
-import $ from 'jquery' 
+import $ from "jquery";
+import "./../lib/multi_timeline.js";
+import "./../multi-timeline.scss";
 
 class Timeline extends React.Component {
-  componentDidMount(){
-    
+  componentDidMount() {}
+  render() {
+    return <div className="editable-timeline" ref={e => (this.state.tl = e)} />;
   }
-  render() {}
 }
 
 Timeline.defaultProps = {

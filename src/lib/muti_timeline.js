@@ -1,4 +1,5 @@
-
+import moment from "moment";
+import jQuery from "jquery";
 
 (function($, window, document, undefined) {
   var pluginName = "multiTimeline",
