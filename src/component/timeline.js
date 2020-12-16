@@ -10,6 +10,10 @@ import time from "./../lib/time";
 //import "./lib/muti-timeline.scss";
 
 class Timeline extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = props;
+  }
   componentDidMount() {
     // $(this.tl).multiTimeline({
     //   start: "2015-02-01",
@@ -18,7 +22,7 @@ class Timeline extends React.Component {
     // });
   }
   render() {
-    const { style, data } = this.props;
+    const { style, data } = this.state;
     let colNums = (
       (data.end_time = data.start_time) /
       data.complexity /
@@ -41,9 +45,31 @@ class Timeline extends React.Component {
           {time.getTimeText(data.start_time + i * data.complexity)}
         </th>
       );
-    console.log(tds.length, ths.length);
+
+    //event
+    const onWheelHandler = e => {
+      e.preventDefault();
+      if (e.ctrlKey) {
+      } else {
+        var container = document.getElementById("timeline-wrapper");
+        var containerScrollPosition = document.getElementById(
+          "timeline-wrapper"
+        ).scrollLeft;
+        container.scrollTo({
+          top: 0,
+          left: containerScrollPosition + e.deltaY,
+          behaviour: "smooth"
+        });
+      }
+    };
+
     return (
-      <div className="timeline-wrapper" style={{width:style.width+"px"}}>
+      <div
+        onWheel={onWheelHandler}
+        id="timeline-wrapper"
+        className="timeline-wrapper"
+        style={{ width: style.width + "px" }}
+      >
         <table className="timeline-table">
           <tbody>{tds}</tbody>
           <tfoot>{ths}</tfoot>
