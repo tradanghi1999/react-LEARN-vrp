@@ -1,8 +1,8 @@
 import React from "react";
 import "./style.css";
 import RouteTable from "./component/route_tbl";
-import "./style/timeline.css";
-import "./style/antd.css";
+import "./timeline.css";
+import "./antd.css";
 import API from "./lib/api";
 
 class App extends React.Component {
