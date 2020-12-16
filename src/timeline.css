@@ -342,14 +342,14 @@
 }
 
 .late_start {
-  height: 10px;
+  height: 20px;
   /*  */
   flex-shrink: 0;
 }
 
 .late_start:hover {
-  background-color: whitesmoke;
-  cursor: pointer;
+  background-color: #85A6DE ;
+  cursor: ew-resize;
 }
 /* .rt-manual :nth-child(2n) {
     background-color: white;
