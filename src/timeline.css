@@ -29,7 +29,7 @@
   width: 80%;
   flex-wrap: nowrap;
   overflow-y: hidden;
-  overflow-x: scroll;
+ 
   /*  */
 
   min-height: 60px;
@@ -48,6 +48,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /*  */
+  flex-shrink: 0;
 }
 
 .rt-link {
@@ -57,6 +59,8 @@
   text-align: center;
   align-self: center;
   margin-bottom: 10px;
+  /*  */
+  flex-shrink: 0;
 }
 
 .rt-link-mini .rt-shiptime {
@@ -90,6 +94,8 @@
   align-items: center;
   /*  */
   cursor: pointer;
+  /*  */
+  flex-shrink: 0;
 }
 
 .rt-cus:hover {
