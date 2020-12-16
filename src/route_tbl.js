@@ -14,7 +14,7 @@ class RouteTable extends React.Component {
       let data = {
         route_data
       };
-      return <RouteRow key={i + 1} style={st} data ={data}/>;
+      return <RouteRow key={i + 1} style={st} data={data} />;
     });
     return <div className="rt-manual">{Routes}</div>;
   }
@@ -26,7 +26,7 @@ RouteTable.defaultProps = {
       "#1f77b4",
       "#3a649b", // da sua
       "#ff7f0e",
-      "#ffbb78",
+      "##f07700", //da sua
       "#2ca02c",
       "#98df8a",
       "#d62728",
