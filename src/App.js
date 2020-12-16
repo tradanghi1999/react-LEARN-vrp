@@ -29,10 +29,11 @@ class App extends React.Component {
           <p>Start editing to see some magic happen :)</p>
         </div>
       );
-    return <React.Fragment>
-    <RouteTable data={data} />
-    <Timeline/>
-    </React.Fragment>;
+    return (
+      <React.Fragment>
+        <Timeline />
+      </React.Fragment>
+    );
   }
 }
 

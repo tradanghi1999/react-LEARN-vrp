@@ -1,27 +1,27 @@
-.tln-container {
+/* .tln-container {
   display: flex;
   /* justify-content: space-evenly; */
   /*  */
-  min-height: 100px;
-  height: 100%;
+  /* min-height: 100px; */
+  /* height: 100%; */
   /* background-color: grey; */
-}
+/* } */
 
-.tln-period {
+/* .tln-period { */
   /* grid-area: "a"; */
-  width: 30px;
-  display: flex;
-  justify-content: center;
+  /* width: 30px; */
+  /* display: flex; */
+  /* justify-content: center; */
   /*  */
-}
+/* } */ 
 
-.tln-period div {
+/* .tln-period div { */
   /* grid-area: "a"; */
-  width: 1px;
+  /* width: 1px; */
   /*  */
-  background-color: whitesmoke;
-  height: 100%;
-}
+  /* background-color: whitesmoke; */
+  /* height: 100%; */
+/* } */
 
 .rt-container {
   display: flex;
@@ -166,8 +166,9 @@
 .capacity-percentage,
 .capacity-number,
 .capacity-percentage .present,
-.capacity-percentage .expected,
-.tln-container {
+.capacity-percentage .expected
+/* .tln-container  */
+{
   grid-column-start: 1;
   grid-column-end: 1;
   grid-row-start: 1;
@@ -313,24 +314,24 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 700;
 }
-
+/* 
 .timeline-display {
   padding: 10px 0px;
   width: 80%;
   text-align: center;
-}
+} */
 
 .un-tln {
   width: 250px;
   height: 100%;
 }
-
+/* 
 .tln {
   display: flex;
   width: 80%;
   justify-content: space-between;
   padding: 0 7px;
-}
+} */
 
 .util {
 }
@@ -358,7 +359,7 @@
 .rt-manual :nth-child(2n+1) {
     background-color: whitesmoke;
 } */
-
+/* 
 .timeline-content {
   display: flex;
   justify-content: space-between;
@@ -373,7 +374,7 @@
 .timeline-header {
   display: flex;
   justify-content: space-between;
-}
+} */
 
 
 /* Phan Timeline D3 */

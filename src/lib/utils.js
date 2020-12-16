@@ -5,12 +5,12 @@ const interleave = (array1, array2) => {
 const createWithNum = (numToCreate, f, ...args) => {
   let arr = [];
   for (let i = 0; i < numToCreate; i++) {
-    arr.push(f.apply(args));
+    let iArrs = [i, ...args];
+    arr.push(f.apply(iArrs));
   }
   return arr;
 };
 
-const utils = { interleave, createWithNum};
+const utils = { interleave, createWithNum };
 
 export default utils;
-

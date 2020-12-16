@@ -5,7 +5,7 @@ const TimeTravel = props => {
   const { style, data } = props;
   let width =
     (data.time_value <= 0 ? 0.01 : data.time_value) * style.widthRatio;
-  console.log(width);
+  //console.log(width);
   if ((data.start_point == 0 || data.end_point == 0) && width > 10)
     width = width - 10;
   return (

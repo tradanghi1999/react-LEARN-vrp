@@ -129,7 +129,7 @@ const API = {
           };
           return d;
         });
-        console.log(pointOnRoutes);
+        //console.log(pointOnRoutes);
         return rRG;
       })
     );
