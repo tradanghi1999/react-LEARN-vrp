@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Capacity = props => {
   const { data } = props;
   return (
-    <div class="capacity-container">
+    <div className="capacity-container">
       <div className="capacity-percentage">
         <div className="present" style={{ width: data.percentage + "%" }} />
         <div className="expected" style={{ width: 0 + "%" }} />

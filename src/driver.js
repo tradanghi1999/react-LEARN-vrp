@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 
 const Driver = ({ data }) => {
   return (
-    <div class="dr-container">
-      <div class="dr-name">{data.name}</div>
-      <div class="dr-total-route">{data.totalInMonth}</div>
-      <div class="dr-today-route">{data.totalToday}</div>
+    <div className="dr-container">
+      <div className="dr-name">{data.name}</div>
+      <div className="dr-total-route">{data.totalInMonth}</div>
+      <div className="dr-today-route">{data.totalToday}</div>
     </div>
   );
 };

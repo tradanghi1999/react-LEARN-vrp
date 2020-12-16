@@ -5,9 +5,14 @@ const TimeTravel = props => {
   const { style, data } = props;
   let width =
     (data.time_value <= 0 ? 0.01 : data.time_value) * style.widthRatio;
-  if (data.start_point == 0 || data.end_point == 0) width = width - 10;
+  console.log(width);
+  if ((data.start_point == 0 || data.end_point == 0) && width > 10)
+    width = width - 10;
   return (
-    <div class="rt-link" style={{ width: width + "px" }}>
+    <div
+      className={width < 12 ? "rt-link rt-link-mini" : "rt-link"}
+      style={{ width: width + "px" }}
+    >
       <div className="rt-shiptime">{data.time_text}</div>
       <div className="rt-line" />
     </div>

@@ -7,6 +7,7 @@ import { Checkbox } from "antd";
 
 class RouteRow extends React.Component {
   render() {
+    const { style } = this.props;
     return (
       <div className="routing-container">
         <div className="chk_wrapper">
@@ -18,7 +19,7 @@ class RouteRow extends React.Component {
             percentage: this.props.data.route_data.capacity_percentage * 100
           }}
         />
-        <Route />
+        <Route style={style} />
       </div>
     );
   }
@@ -26,7 +27,7 @@ class RouteRow extends React.Component {
 
 RouteRow.defaultProps = {
   style: {
-    color: "#000",
+    color: "#EDF6C8",
     widthRatio: 100
   },
   data: {
