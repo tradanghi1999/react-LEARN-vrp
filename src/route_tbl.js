@@ -26,9 +26,9 @@ RouteTable.defaultProps = {
       "#1f77b4",
       "#3a649b", // da sua
       "#ff7f0e",
-      "##f07700", //da sua
+      "#f07700", //da sua
       "#2ca02c",
-      "#98df8a",
+      "#157f01", //da sua
       "#d62728",
       "#ff9896",
       "#9467bd",
