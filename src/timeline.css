@@ -29,10 +29,16 @@
   width: 80%;
   flex-wrap: nowrap;
   overflow-y: hidden;
- 
+
+  /*  */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   /*  */
 
   min-height: 60px;
+}
+.rt-container::-webkit-scrollbar {
+  display: none;
 }
 
 .rt-depot {
@@ -335,11 +341,13 @@
   padding: 0px 5px;
 }
 
-late_start {
+.late_start {
   height: 10px;
+  /*  */
+  flex-shrink: 0;
 }
 
-late_start:hover {
+.late_start:hover {
   background-color: whitesmoke;
   cursor: pointer;
 }
