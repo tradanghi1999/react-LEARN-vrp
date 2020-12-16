@@ -3,7 +3,21 @@ import PropTypes from "prop-types";
 import RouteRow from "./route_row";
 
 class RouteTable extends React.Component {
-  render() {}
+  render() {
+    const { style, data } = this.props;
+    let Routes = data.map((x, i) => {
+      let st = {
+        color: style.colors[i],
+        widthRatio: 100
+      };
+      let route_data = x;
+      let data = {
+        route_data
+      };
+      return <RouteRow key={i + 1} style={st} data ={data}/>;
+    });
+    return <div className="rt-manual">{Routes}</div>;
+  }
 }
 
 RouteTable.defaultProps = {

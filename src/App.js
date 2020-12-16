@@ -1,16 +1,16 @@
 import React from "react";
 import "./style.css";
-import RouteRow from "./route_row";
+import RouteTable from "./route_tbl";
 import "./timeline.css";
 import "./antd.css";
 import API from "./lib/api";
 export default function App() {
-  API.getServerCordinatingResult().subscribe(console.log)
+  API.getServerCordinatingResult().subscribe(console.log);
   return (
     <div>
       <h1>Hello StackBlitz!</h1>
       <p>Start editing to see some magic happen :)</p>
-      <RouteRow />
+      <RouteTable />
     </div>
   );
 }
