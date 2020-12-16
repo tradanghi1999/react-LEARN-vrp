@@ -5,6 +5,7 @@ import moment from "moment";
 import $ from "jquery";
 import utils from "./../lib/utils";
 import time from "./../lib/time";
+
 //import "./lib/muti_timeline";
 //import "./lib/muti-timeline.scss";
 
@@ -42,10 +43,12 @@ class Timeline extends React.Component {
       );
     console.log(tds.length, ths.length);
     return (
-      <table>
-        <thead>{ths}</thead>
-        <tbody>{tds}</tbody>
-      </table>
+      <div className="timeline-wrapper" style={{width:style.width+"px"}}>
+        <table className="timeline-table">
+          <tbody>{tds}</tbody>
+          <tfoot>{ths}</tfoot>
+        </table>
+      </div>
     );
   }
 }

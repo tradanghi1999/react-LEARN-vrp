@@ -1,3 +1,25 @@
 .time-period-sub {
   border: 1px solid black;
+  height: 200px;
+}
+.timeline-wrapper {
+  overflow-x: scroll;
+}
+
+.timeline-table {
+  width: max-content;
+  border-collapse: collapse;
+}
+
+.time-period-sub:nth-child(2n + 1) {
+  border-left: none;
+}
+
+.time-period-sub:nth-child(2n) {
+  border-right: none;
+}
+
+.time-period-sub:nth-child(1) {
+  border-top: none;
+  border-bottom: none;
 }

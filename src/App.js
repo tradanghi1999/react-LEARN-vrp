@@ -3,6 +3,7 @@ import "./style.css";
 import RouteTable from "./component/route_tbl";
 import "./timeline.css";
 import "./antd.css";
+import "./tl.css";
 import API from "./lib/api";
 
 import Timeline from "./component/timeline.js";
