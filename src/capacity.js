@@ -17,7 +17,7 @@ const Capacity = props => {
   );
 };
 Capacity.propTypes = {
-  data: PropTypes.element.isRequired
+  data: PropTypes.object
 };
 Capacity.defaultProps = {
   data: {

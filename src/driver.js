@@ -13,7 +13,7 @@ const Driver = props => {
 };
 
 Driver.propTypes = {
-  data: PropTypes.element.isRequired
+  data: PropTypes.object
 };
 
 Driver.defaultProps = {

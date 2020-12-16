@@ -12,11 +12,11 @@ class Route extends React.Component {
     let points = data.map((x, i) => {
       switch (x.type) {
         case "link":
-          return <TimeTravel style={style} data={x.data} />;
+          return <TimeTravel key={i} style={style} data={x.data} />;
         case "point":
-          if (x.subtype == "depot") return <Depot />;
-          else if (x.subtype == "end") return <End />;
-          else return <Customer style={style} data={x.data} />;
+          if (x.subtype == "depot") return <Depot key={i} />;
+          else if (x.subtype == "end") return <End key={i} />;
+          else return <Customer key={i} style={style} data={x.data} />;
       }
     });
     return (

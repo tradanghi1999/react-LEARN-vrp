@@ -25,9 +25,14 @@ class RouteRow extends React.Component {
   }
 }
 
+RouteRow.propTypes = {
+  style: PropTypes.object,
+  data: PropTypes.object
+};
+
 RouteRow.defaultProps = {
   style: {
-    color: "#EDF6C8",
+    color: "#000",
     widthRatio: 100
   },
   data: {

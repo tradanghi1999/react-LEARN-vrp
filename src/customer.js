@@ -22,8 +22,8 @@ const Customer = props => {
 };
 
 Customer.propTypes = {
-  style: PropTypes.element.isRequired,
-  data: PropTypes.element.isRequired
+  style: PropTypes.object,
+  data: PropTypes.object
 };
 
 Customer.defaultProps = {
