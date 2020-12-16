@@ -29,6 +29,7 @@
   width: 80%;
   flex-wrap: nowrap;
   overflow-y: hidden;
+  overflow-x: scroll;
   /*  */
 
   min-height: 60px;
@@ -174,7 +175,7 @@
 .dr-header-containter {
   width: 150px;
   font-size: 10px;
-  padding: 10px;
+  padding: 10px 0;
   /*  */
   display: flex;
   align-items: center;
@@ -210,7 +211,7 @@
 
 .capacity-container,
 .capacity-header-container {
-  padding: 10px;
+  padding: 10px 0;
   width: 70px;
 }
 
