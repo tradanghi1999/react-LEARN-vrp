@@ -13,7 +13,11 @@ class RouteRow extends React.Component {
           <Checkbox />
         </div>
         <Driver />
-        <Capactity />
+        <Capactity
+          data={{
+            percentage: this.props.data.route_data.capacity_percentage * 100
+          }}
+        />
         <Route />
       </div>
     );
@@ -25,7 +29,12 @@ RouteRow.defaultProps = {
     color: "#000",
     widthRatio: 100
   },
-  
+  data: {
+    route_data: {
+      capacity_percentage: "0",
+      routeG: null
+    }
+  }
 };
 
 export default RouteRow;

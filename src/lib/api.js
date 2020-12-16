@@ -117,9 +117,13 @@ const API = {
           );
         });
 
-        let rRG = rG.map(x => {
+        let rRG = rG.map((x,i) => {
           return {
-            weight_limit: vehicles.weight_limit,
+            capacity_percentage: (pointOnRoutes[i]
+            .filter(x => x.subtype =="customer")
+            .map(x => x.data.service_time)
+            .reduce((a,b) => a+b) / vehicles.weight_limit)
+            .toFixed(2),
             routeG: x
           };
         });
