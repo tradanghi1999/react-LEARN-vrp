@@ -2,6 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 class Customer extends React.Component {
+  constructor(props) {
+    super(props);
+    this._cus = React.createRef();
+    this.state = {
+      className: "rt-cus",
+      classNameMini: "rt-cus rt-cus-mini"
+    };
+  }
   onClickHandeler = e => {
     const { id } = this.props.data;
     e.preventDefault();
@@ -14,8 +22,10 @@ class Customer extends React.Component {
     //console.log(width);
 
     return (
-      <div onClick={this.onClickHandeler}
-        className={width > 50 ? "rt-cus" : "rt-cus rt-cus-mini"}
+      <div
+        ref={this._cus}
+        onClick={this.onClickHandeler}
+        className={width > 50 ? this.state.className : this.state.classNameMini}
         style={{
           width: width + "px",
           borderColor: style.color,

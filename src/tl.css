@@ -83,3 +83,8 @@
 .capacity-header-container {
   padding-right: 0px;
 }
+
+.rt-cus-clicked {
+  box-shadow: none;
+  background-color: whitesmoke;
+}
