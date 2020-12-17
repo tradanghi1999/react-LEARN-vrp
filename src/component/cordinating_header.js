@@ -5,7 +5,8 @@ import {
   SwapOutlined,
   SwapRightOutlined,
   BorderLeftOutlined,
-  BorderRightOutlined
+  BorderRightOutlined,
+  DownSquareOutlined
 } from "@ant-design/icons";
 import { Button } from "antd";
 
@@ -14,16 +15,43 @@ class CordinatingHeader extends React.Component {
     return (
       <div className="vrp-header-container">
         <div className="dr-header-containter">
-          <div className="dr-name-header">Tên Tài Xế</div>
+          <div className="dr-name-header">
+            <div>
+              <span>Tên Tài Xế</span>&nbsp;
+              <span>
+                <DownSquareOutlined />
+              </span>
+            </div>
+            <div> 
+              <span>
+                <SwapOutlined />
+              </span>
+            </div>
+          </div>
           <div className="dr-total">
             <div>Tổng chuyến</div>
             <div className="total-details">
-              <div>(Tháng)</div>
-              <div>(Ngày)</div>
+              <div>
+                (Tháng){" "}
+                <span>
+                  <DownSquareOutlined />
+                </span>
+              </div>
+              <div>
+                (Ngày){" "}
+                <span>
+                  <DownSquareOutlined />
+                </span>
+              </div>
             </div>
           </div>
         </div>
-        <div className="capacity-header-container">Trọng tải</div>
+        <div className="capacity-header-container">
+          Trọng tải{" "}
+          <span>
+            <DownSquareOutlined />
+          </span>
+        </div>
         <div className="timeline-display">
           <div className="timeline-header">
             <div>Timeline</div>

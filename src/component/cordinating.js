@@ -9,12 +9,14 @@ class Cordinating extends React.Component {
       <div>
         <div>
           <CordinatingHeader />
+        </div>
+        <div className="cordinating_body">
+          <RouteTable />
           <div className="timeline-underlying">
             <div className="timeline-table-before" />
             <Timeline />
           </div>
         </div>
-        <RouteTable />
       </div>
     );
   }
