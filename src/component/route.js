@@ -5,12 +5,14 @@ import Customer from "./customer";
 import TimeTravel from "./timetravel";
 import LateStart from "./late_start";
 import PropTypes from "prop-types";
+import { selectCustomer } from "./../footer_action";
 
 class Route extends React.Component {
   render() {
     const { data, style } = this.props;
-    const { store } = this.context;
-    console.log(store);
+    //const { store } = this.context;
+    //console.log(store);
+    //console.log(selectCustomer);
     let points = data.map((x, i) => {
       switch (x.type) {
         case "link":

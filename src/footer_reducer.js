@@ -6,7 +6,17 @@ const cordinating = (state, action) => {
       return {
         isLoading: false,
         isLoaded: true,
-        data: action.data
+        data: action.data,
+        chosen: [],
+        chosenOnce: null
+      };
+    case fConstants.SELECT_CUSTOMER:
+      return {
+        isLoading: false,
+        isLoaded: true,
+        data: state.data,
+        chosen: [],
+        chosenOnce: action.cusId
       };
     default:
       return state;
