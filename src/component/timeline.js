@@ -21,25 +21,33 @@ class Timeline extends React.Component {
     //   end: "2015-02-02",
     //   zoom:4
     // });
-    let container = document.getElementById("timeline-wrapper");
-    container.addEventListener(
-      "wheel",
-      function(e) {
-        e.preventDefault();
-        if (e.ctrlKey) {
-        } else {
-          var containerScrollPosition = document.getElementById(
-            "timeline-wrapper"
-          ).scrollLeft;
-          container.scrollTo({
-            top: 0,
-            left: containerScrollPosition + e.deltaY,
-            behaviour: "smooth"
-          });
-        }
-      },
-      { passive: false }
-    );
+    let setScrollP = new Promise(function(rs, rj) {
+      let container = document.getElementById("timeline-wrapper");
+      while (container == null) {
+        setTimeout("", 1000);
+        container = document.getElementById("timeline-wrapper");
+      }
+      container.addEventListener(
+        "wheel",
+        function(e) {
+          e.preventDefault();
+          if (e.ctrlKey) {
+          } else {
+            var containerScrollPosition = document.getElementById(
+              "timeline-wrapper"
+            ).scrollLeft;
+            container.scrollTo({
+              top: 0,
+              left: containerScrollPosition + e.deltaY,
+              behaviour: "smooth"
+            });
+          }
+        },
+        { passive: false }
+      );
+
+      rs(container);
+    });
   }
   componetWillUnmount() {}
   render() {
@@ -70,11 +78,7 @@ class Timeline extends React.Component {
     //event
 
     return (
-      <div
-        id="timeline-wrapper"
-        className="timeline-wrapper"
-        
-      >
+      <div id="timeline-wrapper" className="timeline-wrapper">
         <table className="timeline-table">
           <tbody>
             <tr>{tds}</tr>

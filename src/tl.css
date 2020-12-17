@@ -34,3 +34,13 @@
 .timeline-underlying {
   display: flex;
 }
+
+.ant-btn {
+  margin: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgb(68, 67, 67);
+  border:none;
+  background-color: rgb(238, 238, 162);
+
+}
