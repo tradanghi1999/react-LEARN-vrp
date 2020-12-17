@@ -33,6 +33,7 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <Timeline />
+        <RouteTable data ={data} />
       </React.Fragment>
     );
   }

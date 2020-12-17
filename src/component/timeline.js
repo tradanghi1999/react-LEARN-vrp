@@ -13,30 +13,7 @@ class Timeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = props;
-    this.wheelHandler = this.wheelHandler.bind(this);
-    this.onWheelHandler = this.onWheelHandler.bind(this);
   }
-
-  wheelHandler(e) {
-    if (e.ctrlKey) {
-      console.log("de");
-    }
-  }
-
-  onWheelHandler = e => {
-    e.preventDefault();
-    if (e.ctrlKey) {
-    } else {
-      var container = document.getElementById("timeline-wrapper");
-      var containerScrollPosition = document.getElementById("timeline-wrapper")
-        .scrollLeft;
-      container.scrollTo({
-        top: 0,
-        left: containerScrollPosition + e.deltaY,
-        behaviour: "smooth"
-      });
-    }
-  };
 
   componentDidMount() {
     // $(this.tl).multiTimeline({
@@ -44,16 +21,8 @@ class Timeline extends React.Component {
     //   end: "2015-02-02",
     //   zoom:4
     // });
-    this.timeline_containers.addEventListener(
-      "onwheel",
-      this.onWheelHandler,
-      false
-    );
-    document.addEventListener("onwheel", this.wheelHandler, false);
   }
-  componetWillUnmount() {
-    document.removeEventListener("onwheel", this.wheelHandler, false);
-  }
+  componetWillUnmount() {}
   render() {
     const { style, data } = this.state;
     let colNums = (
@@ -80,10 +49,24 @@ class Timeline extends React.Component {
       );
 
     //event
-
+    const onWheelHandler = e => {
+      e.preventDefault();
+      if (e.ctrlKey) {
+      } else {
+        var container = document.getElementById("timeline-wrapper");
+        var containerScrollPosition = document.getElementById(
+          "timeline-wrapper"
+        ).scrollLeft;
+        container.scrollTo({
+          top: 0,
+          left: containerScrollPosition + e.deltaY,
+          behaviour: "smooth"
+        });
+      }
+    };
     return (
       <div
-        ref={this.timeline_containers}
+        onWheel={onWheelHandler}
         id="timeline-wrapper"
         className="timeline-wrapper"
         style={{ width: style.width + "px" }}
