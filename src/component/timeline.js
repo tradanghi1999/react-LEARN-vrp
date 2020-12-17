@@ -84,16 +84,16 @@ class Timeline extends React.Component {
   }
 }
 
-Timeline.defaultProps = {
-  style: {
-    widthStandardRatio: 100,
-    width: 800
-  },
-  data: {
-    complexity: 1,
-    start_time: 8,
-    end_time: 23
-  }
-};
+// Timeline.defaultProps = {
+//   style: {
+//     widthStandardRatio: 100,
+//     width: 800
+//   },
+//   data: {
+//     complexity: 1,
+//     start_time: 8,
+//     end_time: 23
+//   }
+// };
 
 export default Timeline;

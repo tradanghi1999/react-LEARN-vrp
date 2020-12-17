@@ -9,6 +9,8 @@ import PropTypes from "prop-types";
 class Route extends React.Component {
   render() {
     const { data, style } = this.props;
+    const { store } = this.context;
+    console.log(store);
     let points = data.map((x, i) => {
       switch (x.type) {
         case "link":
