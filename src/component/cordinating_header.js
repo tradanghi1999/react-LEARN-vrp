@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { SwapLeftOutlined, SwapOutlined,SwapRightOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
 class CordinatingHeader extends React.Component {
   render() {
@@ -16,16 +18,21 @@ class CordinatingHeader extends React.Component {
           </div>
         </div>
         <div className="capacity-header-container">Trọng tải</div>
-        <div class="timeline-display">
-           <div class="timeline-header">
-                <div> </div>
-                <div>Timeline</div>
-                <div class="ulti">
-                    <div class="hide-btn">
-                        <i class="fas fa-angle-double-down"></i>
-                    </div>
-                </div>
-            </div>
+        <div className="timeline-display">
+          <div className="timeline-header">
+            <div>Timeline</div>
+          </div>
+          <div className="timeline-content">
+            <Button>
+              <SwapLeftOutlined />
+            </Button>
+            <Button>
+              <SwapOutlined />
+            </Button>
+            <Button>
+              <SwapRightOutlined />
+            </Button>
+          </div>
         </div>
       </div>
     );
