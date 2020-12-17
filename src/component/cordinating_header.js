@@ -1,6 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { SwapLeftOutlined, SwapOutlined,SwapRightOutlined } from "@ant-design/icons";
+import {
+  SwapLeftOutlined,
+  SwapOutlined,
+  SwapRightOutlined,
+  BorderLeftOutlined,
+  BorderRightOutlined
+} from "@ant-design/icons";
 import { Button } from "antd";
 
 class CordinatingHeader extends React.Component {
@@ -31,6 +37,12 @@ class CordinatingHeader extends React.Component {
             </Button>
             <Button>
               <SwapRightOutlined />
+            </Button>
+            <Button>
+              <BorderLeftOutlined />
+            </Button>
+            <Button>
+              <BorderRightOutlined />
             </Button>
           </div>
         </div>
