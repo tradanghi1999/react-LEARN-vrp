@@ -12,7 +12,11 @@ import time from "./../lib/time";
 class Timeline extends React.Component {
   constructor(props) {
     super(props);
-    this.state = props;
+    const { style, data } = props;
+    this.state = {
+      style,
+      data
+    };
   }
 
   componentDidMount() {
@@ -21,25 +25,25 @@ class Timeline extends React.Component {
     //   end: "2015-02-02",
     //   zoom:4
     // });
-      let container = document.getElementById("timeline-wrapper");
-      container.addEventListener(
-        "wheel",
-        function(e) {
-          e.preventDefault();
-          if (e.ctrlKey) {
-          } else {
-            var containerScrollPosition = document.getElementById(
-              "timeline-wrapper"
-            ).scrollLeft;
-            container.scrollTo({
-              top: 0,
-              left: containerScrollPosition + e.deltaY,
-              behaviour: "smooth"
-            });
-          }
-        },
-        { passive: false }
-      )
+    let container = document.getElementById("timeline-wrapper");
+    container.addEventListener(
+      "wheel",
+      function(e) {
+        e.preventDefault();
+        if (e.ctrlKey) {
+        } else {
+          var containerScrollPosition = document.getElementById(
+            "timeline-wrapper"
+          ).scrollLeft;
+          container.scrollTo({
+            top: 0,
+            left: containerScrollPosition + e.deltaY,
+            behaviour: "smooth"
+          });
+        }
+      },
+      { passive: false }
+    );
   }
   componetWillUnmount() {}
   render() {

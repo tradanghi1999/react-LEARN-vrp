@@ -12,8 +12,9 @@ class Route extends React.Component {
     const { cusId } = data;
     const { store } = this.context;
     let action = selectCustomer(cusId);
-    
-    console.log(action);
+    if (store != null) store.dispatch(action);
+    else console.log("No Store");
+    //console.log(action);
   };
 
   render() {
