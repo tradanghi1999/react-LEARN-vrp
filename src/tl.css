@@ -12,6 +12,10 @@
   border-collapse: collapse;
 }
 
+timeline-table tfoot th {
+  text-align: center;
+}
+
 .time-period-sub:nth-child(2n + 1) {
   border-left: none;
 }
@@ -26,7 +30,7 @@
 }
 
 .timeline-table-before {
-  width: 150px;
+  width: 220px;
 
   flex-shrink: 0;
 }
