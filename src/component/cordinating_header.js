@@ -58,31 +58,31 @@ class CordinatingHeader extends React.Component {
           </div>
           <div className="timeline-content">
             <Tooltip placement="bottom" title="Chuyền Trái">
-              <Button>
+              <Button size="small">
                 <SwapLeftOutlined />
               </Button>
             </Tooltip>
 
             <Tooltip placement="bottom" title="Đổi chỗ">
-              <Button>
+              <Button size="small">
                 <SwapOutlined />
               </Button>
             </Tooltip>
 
             <Tooltip placement="bottom" title="Chuyển Phải">
-              <Button>
+              <Button size="small">
                 <SwapRightOutlined />
               </Button>
             </Tooltip>
 
             <Tooltip placement="bottom" title="Thêm Trái">
-              <Button>
+              <Button size="small">
                 <BorderLeftOutlined />
               </Button>
             </Tooltip>
 
             <Tooltip placement="bottom" title="Thêm Phải">
-              <Button>
+              <Button size="small">
                 <BorderRightOutlined />
               </Button>
             </Tooltip>

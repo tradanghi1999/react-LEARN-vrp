@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css";
 import Cordinating from "./component/cordinating";
+import 'antd/dist/antd.css';
 import "./timeline.css";
 import "./antd.css";
 import "./tl.css";

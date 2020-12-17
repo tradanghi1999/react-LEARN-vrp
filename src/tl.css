@@ -27,7 +27,7 @@
 
 .timeline-table-before {
   width: 150px;
-  padding: 40px;
+
   flex-shrink: 0;
 }
 
@@ -44,6 +44,11 @@
   background-color: rgb(238, 238, 162);
 }
 
+.ant-btn-sm {
+  height: 15px;
+  padding: 0px 5px;
+}
+
 .cordinating_body {
   display: grid;
   grid-template-columns: 1fr;
@@ -51,12 +56,13 @@
   align-items: flex-start;
 }
 
-.rt-manual, .timeline-underlying{
+.rt-manual,
+.timeline-underlying {
   grid-column-start: 1;
   grid-column-end: 1;
   grid-row-start: 1;
   grid-row-end: 1;
 }
-.rt-manual{
+.rt-manual {
   z-index: 100;
 }
