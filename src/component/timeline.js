@@ -21,12 +21,7 @@ class Timeline extends React.Component {
     //   end: "2015-02-02",
     //   zoom:4
     // });
-    let setScrollP = new Promise(function(rs, rj) {
       let container = document.getElementById("timeline-wrapper");
-      while (container == null) {
-        setTimeout("", 1000);
-        container = document.getElementById("timeline-wrapper");
-      }
       container.addEventListener(
         "wheel",
         function(e) {
@@ -44,10 +39,7 @@ class Timeline extends React.Component {
           }
         },
         { passive: false }
-      );
-
-      rs(container);
-    });
+      )
   }
   componetWillUnmount() {}
   render() {
