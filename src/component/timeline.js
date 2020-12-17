@@ -73,7 +73,7 @@ class Timeline extends React.Component {
       <div
         id="timeline-wrapper"
         className="timeline-wrapper"
-        style={{ width: style.width + "px" }}
+        
       >
         <table className="timeline-table">
           <tbody>

@@ -4,6 +4,7 @@
 }
 .timeline-wrapper {
   overflow-x: scroll;
+  flex-grow: 1;
 }
 
 .timeline-table {
@@ -26,6 +27,7 @@
 
 .timeline-table-before {
   width: 260px;
+  flex-grow: 0;
 }
 
 .timeline-underlying {
