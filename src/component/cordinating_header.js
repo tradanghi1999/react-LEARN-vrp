@@ -8,7 +8,7 @@ import {
   BorderRightOutlined,
   DownSquareOutlined
 } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 
 class CordinatingHeader extends React.Component {
   render() {
@@ -22,7 +22,7 @@ class CordinatingHeader extends React.Component {
                 <DownSquareOutlined />
               </span>
             </div>
-            <div> 
+            <div>
               <span>
                 <SwapOutlined />
               </span>
@@ -57,21 +57,35 @@ class CordinatingHeader extends React.Component {
             <div>Timeline</div>
           </div>
           <div className="timeline-content">
-            <Button>
-              <SwapLeftOutlined />
-            </Button>
-            <Button>
-              <SwapOutlined />
-            </Button>
-            <Button>
-              <SwapRightOutlined />
-            </Button>
-            <Button>
-              <BorderLeftOutlined />
-            </Button>
-            <Button>
-              <BorderRightOutlined />
-            </Button>
+            <Tooltip placement="bottom" title="Chuyền Trái">
+              <Button>
+                <SwapLeftOutlined />
+              </Button>
+            </Tooltip>
+
+            <Tooltip placement="bottom" title="Đổi chỗ">
+              <Button>
+                <SwapOutlined />
+              </Button>
+            </Tooltip>
+
+            <Tooltip placement="bottom" title="Chuyển Phải">
+              <Button>
+                <SwapRightOutlined />
+              </Button>
+            </Tooltip>
+
+            <Tooltip placement="bottom" title="Thêm Trái">
+              <Button>
+                <BorderLeftOutlined />
+              </Button>
+            </Tooltip>
+
+            <Tooltip placement="bottom" title="Thêm Phải">
+              <Button>
+                <BorderRightOutlined />
+              </Button>
+            </Tooltip>
           </div>
         </div>
       </div>
