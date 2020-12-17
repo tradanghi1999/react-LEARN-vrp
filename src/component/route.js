@@ -8,6 +8,14 @@ import PropTypes from "prop-types";
 import { selectCustomer } from "./../footer_action";
 
 class Route extends React.Component {
+  onClickCustomer = data => {
+    const { cusId } = data;
+    const { store } = this.context;
+    let action = selectCustomer(cusId);
+    
+    console.log(action);
+  };
+
   render() {
     const { data, style } = this.props;
     //const { store } = this.context;
@@ -20,7 +28,15 @@ class Route extends React.Component {
         case "point":
           if (x.subtype == "depot") return <Depot key={i} />;
           else if (x.subtype == "end") return <End key={i} />;
-          else return <Customer key={i} style={style} data={x.data} />;
+          else
+            return (
+              <Customer
+                key={i}
+                style={style}
+                data={x.data}
+                onClick={this.onClickCustomer}
+              />
+            );
       }
     });
     return (
