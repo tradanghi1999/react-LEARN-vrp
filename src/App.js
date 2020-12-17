@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import RouteTable from "./component/route_tbl";
+import Cordinating from "./component/cordinating";
 import "./timeline.css";
 import "./antd.css";
 import "./tl.css";
@@ -32,8 +32,7 @@ class App extends React.Component {
       );
     return (
       <React.Fragment>
-        <Timeline />
-        <RouteTable data ={data} />
+        <Cordinating/>
       </React.Fragment>
     );
   }
