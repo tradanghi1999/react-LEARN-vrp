@@ -1,26 +1,26 @@
 /* .tln-container {
   display: flex;
   /* justify-content: space-evenly; */
-  /*  */
-  /* min-height: 100px; */
-  /* height: 100%; */
-  /* background-color: grey; */
+/*  */
+/* min-height: 100px; */
+/* height: 100%; */
+/* background-color: grey; */
 /* } */
 
 /* .tln-period { */
-  /* grid-area: "a"; */
-  /* width: 30px; */
-  /* display: flex; */
-  /* justify-content: center; */
-  /*  */
-/* } */ 
+/* grid-area: "a"; */
+/* width: 30px; */
+/* display: flex; */
+/* justify-content: center; */
+/*  */
+/* } */
 
 /* .tln-period div { */
-  /* grid-area: "a"; */
-  /* width: 1px; */
-  /*  */
-  /* background-color: whitesmoke; */
-  /* height: 100%; */
+/* grid-area: "a"; */
+/* width: 1px; */
+/*  */
+/* background-color: whitesmoke; */
+/* height: 100%; */
 /* } */
 
 .rt-container {
@@ -168,7 +168,7 @@
 .capacity-percentage .present,
 .capacity-percentage .expected
 /* .tln-container  */
-{
+ {
   grid-column-start: 1;
   grid-column-end: 1;
   grid-row-start: 1;
@@ -198,6 +198,7 @@
 
 .dr-header-containter {
   font-weight: 700;
+  align-items: flex-start;
 }
 
 .dr-total div {
@@ -224,7 +225,7 @@
 
 .capacity-container,
 .capacity-header-container {
-  padding: 10px 0;
+  padding: 10px;
   width: 70px;
 }
 
@@ -260,6 +261,10 @@
 .vrp-header-container {
   display: flex;
   /*  */
+}
+
+.vrp-header-container {
+  padding: 0 20px;
 }
 
 .routing-container:nth-child(2n) {
@@ -349,7 +354,7 @@
 }
 
 .late_start:hover {
-  background-color: #85A6DE ;
+  background-color: #85a6de;
   cursor: ew-resize;
 }
 /* .rt-manual :nth-child(2n) {
@@ -375,6 +380,5 @@
   display: flex;
   justify-content: space-between;
 } */
-
 
 /* Phan Timeline D3 */

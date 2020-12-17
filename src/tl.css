@@ -23,3 +23,11 @@
   border-top: none;
   border-bottom: none;
 }
+
+.timeline-table-before {
+  width: 260px;
+}
+
+.timeline-underlying {
+  display: flex;
+}

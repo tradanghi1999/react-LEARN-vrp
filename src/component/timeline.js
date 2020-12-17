@@ -21,6 +21,25 @@ class Timeline extends React.Component {
     //   end: "2015-02-02",
     //   zoom:4
     // });
+    let container = document.getElementById("timeline-wrapper");
+    container.addEventListener(
+      "wheel",
+      function(e) {
+        e.preventDefault();
+        if (e.ctrlKey) {
+        } else {
+          var containerScrollPosition = document.getElementById(
+            "timeline-wrapper"
+          ).scrollLeft;
+          container.scrollTo({
+            top: 0,
+            left: containerScrollPosition + e.deltaY,
+            behaviour: "smooth"
+          });
+        }
+      },
+      { passive: false }
+    );
   }
   componetWillUnmount() {}
   render() {
@@ -49,24 +68,9 @@ class Timeline extends React.Component {
       );
 
     //event
-    const onWheelHandler = e => {
-      e.preventDefault();
-      if (e.ctrlKey) {
-      } else {
-        var container = document.getElementById("timeline-wrapper");
-        var containerScrollPosition = document.getElementById(
-          "timeline-wrapper"
-        ).scrollLeft;
-        container.scrollTo({
-          top: 0,
-          left: containerScrollPosition + e.deltaY,
-          behaviour: "smooth"
-        });
-      }
-    };
+
     return (
       <div
-        onWheel={onWheelHandler}
         id="timeline-wrapper"
         className="timeline-wrapper"
         style={{ width: style.width + "px" }}

@@ -9,8 +9,8 @@ class Cordinating extends React.Component {
       <div>
         <div>
           <CordinatingHeader />
-          <div>
-            <div className="add" />
+          <div className="timeline-underlying">
+            <div className="timeline-table-before" />
             <Timeline />
           </div>
         </div>
