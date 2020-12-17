@@ -6,6 +6,7 @@ class Customer extends React.Component {
     super(props);
     this._cus = React.createRef();
     this.state = {
+      classNameCurrent: "rt-cus",
       className: "rt-cus",
       classNameMini: "rt-cus rt-cus-mini"
     };
@@ -13,19 +14,28 @@ class Customer extends React.Component {
   onClickHandeler = e => {
     const { id } = this.props.data;
     e.preventDefault();
+    const { classNameCurrent } = this.state;
+    this.setState({ classNameCurrent: classNameCurrent + " rt-cus-clicked" });
     this.props.onClick({ cusId: id });
   };
+  componentDidMount() {
+    const { style, data } = this.props;
+    const { className, classNameMini } = this.state;
+    let width =
+      (data.service_time <= 0 ? 0.01 : data.service_time) * style.widthRatio;
+    if (width < 50) this.setState({ classNameCurrent: classNameMini });
+    else this.setState({ classNameCurrent: className });
+  }
   render() {
+    //console.log(width);
     const { style, data } = this.props;
     let width =
       (data.service_time <= 0 ? 0.01 : data.service_time) * style.widthRatio;
-    //console.log(width);
-
     return (
       <div
         ref={this._cus}
         onClick={this.onClickHandeler}
-        className={width > 50 ? this.state.className : this.state.classNameMini}
+        className={this.state.classNameCurrent}
         style={{
           width: width + "px",
           borderColor: style.color,
