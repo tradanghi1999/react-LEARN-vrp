@@ -29,8 +29,8 @@ class Timeline extends React.Component {
     // });
 
     const { data } = this.state;
-    const setStatus = data => {
-      this.setState({ data });
+    const setStatus = d => {
+      this.setState({ d });
     };
     //console.log(data);
     let container = document.getElementById("timeline-wrapper");
@@ -45,6 +45,7 @@ class Timeline extends React.Component {
               start_time: data.start_time,
               end_time: data.end_time
             };
+
             setStatus(nData);
           } else {
             let nData = {
@@ -71,6 +72,7 @@ class Timeline extends React.Component {
   componetWillUnmount() {}
   render() {
     const { style, data } = this.state;
+    console.log(data.complexity);
     let colNums = (
       (data.end_time - data.start_time) /
       data.complexity /
