@@ -31,11 +31,11 @@ class Cordinating extends React.Component {
         data: routeTable.data
       };
       //console.log(nRouteTable);
-      this.state = {
-        timeline: nTimeline,
-        routeTable: nRouteTable
-      };
-      console.log(this.state);
+      // this.setState({
+      //   timeline: nTimeline,
+      //   routeTable: nRouteTable
+      // });
+      // console.log(this.state);
     }
   };
 
