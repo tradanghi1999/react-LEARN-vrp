@@ -20,7 +20,33 @@ class Timeline extends React.Component {
 
     //console.log(this.state);
   }
-
+  onWheelHandler = e => {
+    const { data } = this.state;
+    if (e.ctrlKey) {
+      if (e.deltaY < 0) {
+        if (data.complexity < 0.5) {
+          this.setState({ data });
+        } else
+          this.setState({
+            data: {
+              complexity: data.complexity / 2,
+              start_time: data.start_time,
+              end_time: data.end_time
+            }
+          });
+      } else {
+        if (data.complexity > 1) this.setState({ data });
+        else
+          this.setState({
+            data: {
+              complexity: data.complexity * 2,
+              start_time: data.start_time,
+              end_time: data.end_time
+            }
+          });
+      }
+    }
+  };
   componentDidMount() {
     // $(this.tl).multiTimeline({
     //   start: "2015-02-01",
@@ -28,10 +54,6 @@ class Timeline extends React.Component {
     //   zoom:4
     // });
 
-    const { data } = this.state;
-    const setStatus = d => {
-      this.setState({ d });
-    };
     //console.log(data);
     let container = document.getElementById("timeline-wrapper");
     container.addEventListener(
@@ -39,22 +61,6 @@ class Timeline extends React.Component {
       function(e) {
         e.preventDefault();
         if (e.ctrlKey) {
-          if (e.wheelDelta > 0) {
-            let nData = {
-              complexity: data.complexity / 2,
-              start_time: data.start_time,
-              end_time: data.end_time
-            };
-
-            setStatus(nData);
-          } else {
-            let nData = {
-              complexity: data.complexity * 2,
-              start_time: data.start_time,
-              end_time: data.end_time
-            };
-            setStatus(nData);
-          }
         } else {
           var containerScrollPosition = document.getElementById(
             "timeline-wrapper"
@@ -79,12 +85,14 @@ class Timeline extends React.Component {
       0.5
     ).toFixed(0);
     //tds
-    let tds = utils.createWithNum(colNums * 2, i => (
+    let tds = utils.createWithNum(colNums, i => (
       <td key={i} className="time-period-sub" />
     ));
     // create ths
     let ths = [];
-    for (let i = 0; i < colNums; i++)
+    for (let i = 0; i < colNums / 2; i++) {
+      let hour = data.start_time + i * data.complexity;
+      //if (hour > 24) break;
       ths.push(
         <th
           colSpan={2}
@@ -92,14 +100,19 @@ class Timeline extends React.Component {
           className="time-period"
           style={{ width: style.widthStandardRatio }}
         >
-          {time.getTimeText(data.start_time + i * data.complexity)}
+          {time.getTimeText(hour)}
         </th>
       );
+    }
 
     //event
 
     return (
-      <div id="timeline-wrapper" className="timeline-wrapper">
+      <div
+        onWheel={this.onWheelHandler}
+        id="timeline-wrapper"
+        className="timeline-wrapper"
+      >
         <table className="timeline-table">
           <tbody>
             <tr>{tds}</tr>

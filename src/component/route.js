@@ -17,6 +17,11 @@ class Route extends React.Component {
     //console.log(action);
   };
 
+  onMaosWheelHandler = e => {
+    console.log("Wheel");
+    
+  };
+
   render() {
     const { data, style } = this.props;
     //const { store } = this.context;
@@ -41,7 +46,7 @@ class Route extends React.Component {
       }
     });
     return (
-      <div className="rt-container">
+      <div  className="rt-container">
         <LateStart />
         {points}
       </div>

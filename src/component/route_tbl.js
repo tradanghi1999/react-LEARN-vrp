@@ -3,6 +3,14 @@ import PropTypes from "prop-types";
 import RouteRow from "./route_row";
 
 class RouteTable extends React.Component {
+  onMaosWheelHandler = e => {
+    //console.log(e);
+    this.props.onMaosWheel({
+      ctrlKey: e.ctrlKey,
+      wheelUpDirection: e.deltaY < 0
+    });
+  };
+
   render() {
     const { style, data } = this.props;
     let Routes = data.map((x, i) => {
@@ -16,7 +24,11 @@ class RouteTable extends React.Component {
       };
       return <RouteRow key={i + 1} style={st} data={data} />;
     });
-    return <div className="rt-manual">{Routes}</div>;
+    return (
+      <div onWheel={this.onMaosWheelHandler} className="rt-manual">
+        {Routes}
+      </div>
+    );
   }
 }
 

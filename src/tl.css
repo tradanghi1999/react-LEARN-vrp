@@ -7,6 +7,9 @@
   overflow-x: scroll;
   flex-shrink: 1;
 }
+.timeline-wrapper::-webkit-scrollbar {
+  display: none;
+}
 
 .timeline-table {
   width: max-content;
@@ -88,3 +91,5 @@
   box-shadow: none;
   background-color: whitesmoke;
 }
+
+

@@ -4,8 +4,48 @@ import RouteTable from "./route_tbl";
 import Timeline from "./timeline";
 import CordinatingHeader from "./cordinating_header";
 class Cordinating extends React.Component {
+  onMaosWheelHandler = ({ ctrlKey, wheelUpDirection }) => {
+    //console.log(ctrlKey);
+    const { timeline, routeTable } = this.state;
+    const { data } = timeline;
+    const { widthRatio } = routeTable.style;
+    const { widthStandardRatio } = timeline.style;
+
+    if (ctrlKey && wheelUpDirection == false && data.complexity >= 0.5) {
+      //console.log(ctrlKey);
+
+      let nTimeline = {
+        style: timeline.style,
+        data: {
+          complexity: data.complexity / 2,
+          start_time: data.start_time,
+          end_time: data.end_time
+        }
+      };
+
+      let nRouteTable = {
+        style: {
+          colors: routeTable.style.colors,
+          widthRatio: widthRatio * 2
+        },
+        data: routeTable.data
+      };
+
+      console.log(nRouteTable);
+    }
+  };
+
+  constructor(props) {
+    super(props);
+    const { timeline, routeTable } = props;
+    this.state = {
+      timeline,
+      routeTable
+    };
+  }
+
   render() {
-    const { timeline, routeTable } = this.props;
+    const { timeline, routeTable } = this.state;
 
     return (
       <div>
@@ -13,7 +53,11 @@ class Cordinating extends React.Component {
           <CordinatingHeader />
         </div>
         <div className="cordinating_body">
-          <RouteTable style={routeTable.style} data={routeTable.data} />
+          <RouteTable
+            onMaosWheel={this.onMaosWheelHandler}
+            style={routeTable.style}
+            data={routeTable.data}
+          />
           <div className="timeline-underlying">
             <div className="timeline-table-before" />
             <Timeline style={timeline.style} data={timeline.data} />
