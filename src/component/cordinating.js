@@ -43,9 +43,19 @@ class Cordinating extends React.Component {
       });
     }
 
-    (ctrlKey == false && wheelUpDirection == false)
-    {
-      
+    if (ctrlKey == false && wheelUpDirection == false) {
+      nTimeline.style.scrollTo += 100;
+      this.setState({
+        timeline: nTimeline,
+        routeTable: nRouteTable
+      });
+    }
+    if (ctrlKey == false && wheelUpDirection == true) {
+      if (nTimeline.style.scrollTo > 100) nTimeline.style.scrollTo -= 100;
+      this.setState({
+        timeline: nTimeline,
+        routeTable: nRouteTable
+      });
     }
   };
 
@@ -86,7 +96,7 @@ Cordinating.defaultProps = {
   timeline: {
     style: {
       widthStandardRatio: 100,
-      scrollTo : 0
+      scrollTo: 0
     },
     data: {
       complexity: 1,

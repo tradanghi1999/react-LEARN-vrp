@@ -14,6 +14,7 @@ import _ from "lodash";
 const Timeline = props => {
   const [style, setStyle] = useState(props.style);
   const [data, setData] = useState(props.data);
+  console.log(style.scrollTo);
 
   const onWheelHandler = e => {
     //const { data } = this.state;
@@ -43,11 +44,7 @@ const Timeline = props => {
 
   useEffect(() => {
     let container = document.getElementById("timeline-wrapper");
-    container.scrollTo({
-            top: 0,
-             left: style.scrollTo,
-             behaviour: "smooth"
-           });
+    container.scrollLeft = style.scrollTo;
     container.addEventListener(
       "wheel",
       function(e) {
