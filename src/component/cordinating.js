@@ -11,7 +11,7 @@ class Cordinating extends React.Component {
     const { widthRatio } = routeTable.style;
     const { widthStandardRatio } = timeline.style;
 
-    if (ctrlKey && wheelUpDirection == false && data.complexity >= 0.5) {
+    if (ctrlKey && wheelUpDirection == true && data.complexity >= 0.5) {
       //console.log(ctrlKey);
 
       let nTimeline = {
@@ -30,8 +30,12 @@ class Cordinating extends React.Component {
         },
         data: routeTable.data
       };
-
-      console.log(nRouteTable);
+      //console.log(nRouteTable);
+      this.state = {
+        timeline: nTimeline,
+        routeTable: nRouteTable
+      };
+      console.log(this.state);
     }
   };
 
