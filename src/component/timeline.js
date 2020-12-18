@@ -28,9 +28,18 @@ class Timeline extends React.Component {
     let container = document.getElementById("timeline-wrapper");
     container.addEventListener(
       "wheel",
-      function(e) {
+      function(e, delta) {
         e.preventDefault();
         if (e.ctrlKey) {
+          if (e.wheelDelta > 0) {
+            const { data } = this.state;
+            console.log(data)
+            // let nData = {
+            //   complexity: data.complexity/2,
+            //   start_time: data.start_time,
+            //   end_time: data.end_time
+            // }
+          }
         } else {
           var containerScrollPosition = document.getElementById(
             "timeline-wrapper"
