@@ -42,6 +42,11 @@ class Cordinating extends React.Component {
         routeTable: nRouteTable
       });
     }
+
+    (ctrlKey == false && wheelUpDirection == false)
+    {
+      
+    }
   };
 
   constructor(props) {

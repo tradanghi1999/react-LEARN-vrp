@@ -5,126 +5,113 @@ import moment from "moment";
 import $ from "jquery";
 import utils from "./../lib/utils";
 import time from "./../lib/time";
+import { useEffect, useState } from "react";
+import _ from "lodash";
 
 //import "./lib/muti_timeline";
 //import "./lib/muti-timeline.scss";
 
-class Timeline extends React.Component {
-  constructor(props) {
-    super(props);
-    const { style, data } = props;
-    this.state = {
-      style,
-      data
-    };
+const Timeline = props => {
+  const [style, setStyle] = useState(props.style);
+  const [data, setData] = useState(props.data);
 
-    //console.log(this.state);
-  }
-  onWheelHandler = e => {
-    const { data } = this.state;
+  const onWheelHandler = e => {
+    //const { data } = this.state;
     if (e.ctrlKey) {
       if (e.deltaY < 0) {
         if (data.complexity < 0.5) {
-          this.setState({ data });
-        } else
-          this.setState({
-            data: {
-              complexity: data.complexity / 2,
-              start_time: data.start_time,
-              end_time: data.end_time
-            }
+          //this.setState({ data });
+        }
+        //this.setState({
+        else
+          setData({
+            complexity: data.complexity / 2,
+            start_time: data.start_time,
+            end_time: data.end_time
           });
       } else {
-        if (data.complexity > 1) this.setState({ data });
-        else
-          this.setState({
-            data: {
-              complexity: data.complexity * 2,
-              start_time: data.start_time,
-              end_time: data.end_time
-            }
+        if (data.complexity > 1) {
+        } else
+          setData({
+            complexity: data.complexity * 2,
+            start_time: data.start_time,
+            end_time: data.end_time
           });
       }
     }
   };
-  componentDidMount() {
-    // $(this.tl).multiTimeline({
-    //   start: "2015-02-01",
-    //   end: "2015-02-02",
-    //   zoom:4
-    // });
 
-    //console.log(data);
+  useEffect(() => {
     let container = document.getElementById("timeline-wrapper");
+    container.scrollTo({
+            top: 0,
+             left: style.scrollTo,
+             behaviour: "smooth"
+           });
     container.addEventListener(
       "wheel",
       function(e) {
         e.preventDefault();
-        if (e.ctrlKey) {
-        } else {
-          var containerScrollPosition = document.getElementById(
-            "timeline-wrapper"
-          ).scrollLeft;
-          container.scrollTo({
-            top: 0,
-            left: containerScrollPosition + e.deltaY,
-            behaviour: "smooth"
-          });
-        }
+
+        // if (e.ctrlKey) {
+        // } else {
+        //   var containerScrollPosition = document.getElementById(
+        //     "timeline-wrapper"
+        //   ).scrollLeft;
+        //   container.scrollTo({
+        //     top: 0,
+        //     left: containerScrollPosition + e.deltaY,
+        //     behaviour: "smooth"
+        //   });
+        // }
       },
       { passive: false }
     );
-  }
-  componetWillUnmount() {}
-  render() {
-    const { style, data } = this.state;
-    console.log(data.complexity);
-    let colNums = (
-      (data.end_time - data.start_time) /
-      data.complexity /
-      0.5
-    ).toFixed(0);
-    //tds
-    let tds = utils.createWithNum(colNums, i => (
-      <td key={i} className="time-period-sub" />
-    ));
-    // create ths
-    let ths = [];
-    for (let i = 0; i < colNums / 2; i++) {
-      let hour = data.start_time + i * data.complexity;
-      //if (hour > 24) break;
-      ths.push(
-        <th
-          colSpan={2}
-          key={i}
-          className="time-period"
-          style={{ width: style.widthStandardRatio }}
-        >
-          {time.getTimeText(hour)}
-        </th>
-      );
-    }
+  }, []);
 
-    //event
-
-    return (
-      <div
-        onWheel={this.onWheelHandler}
-        id="timeline-wrapper"
-        className="timeline-wrapper"
+  let colNums = (
+    (data.end_time - data.start_time) /
+    data.complexity /
+    0.5
+  ).toFixed(0);
+  //tds
+  let tds = utils.createWithNum(colNums, i => (
+    <td key={i} className="time-period-sub" />
+  ));
+  // create ths
+  let ths = [];
+  for (let i = 0; i < colNums / 2; i++) {
+    let hour = data.start_time + i * data.complexity;
+    //if (hour > 24) break;
+    ths.push(
+      <th
+        colSpan={2}
+        key={i}
+        className="time-period"
+        style={{ width: style.widthStandardRatio }}
       >
-        <table className="timeline-table">
-          <tbody>
-            <tr>{tds}</tr>
-          </tbody>
-          <tfoot>
-            <tr>{ths}</tr>
-          </tfoot>
-        </table>
-      </div>
+        {time.getTimeText(hour)}
+      </th>
     );
   }
-}
+
+  return (
+    <div
+      onWheel={this.onWheelHandler}
+      id="timeline-wrapper"
+      className="timeline-wrapper"
+    >
+      <table className="timeline-table">
+        <tbody>
+          <tr>{tds}</tr>
+        </tbody>
+        <tfoot>
+          <tr>{ths}</tr>
+        </tfoot>
+      </table>
+    </div>
+  );
+};
 
 // Timeline.defaultProps = {
 //   style: {
