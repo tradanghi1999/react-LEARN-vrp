@@ -16,7 +16,7 @@ class RouteTable extends React.Component {
     let Routes = data.map((x, i) => {
       let st = {
         color: style.colors[i],
-        widthRatio: 100
+        widthRatio: style.widthRatio
       };
       let route_data = x;
       let data = {

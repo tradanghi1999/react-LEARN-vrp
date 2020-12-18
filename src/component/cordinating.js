@@ -3,39 +3,44 @@ import PropTypes from "prop-types";
 import RouteTable from "./route_tbl";
 import Timeline from "./timeline";
 import CordinatingHeader from "./cordinating_header";
+import _ from "lodash";
 class Cordinating extends React.Component {
   onMaosWheelHandler = ({ ctrlKey, wheelUpDirection }) => {
     //console.log(ctrlKey);
     const { timeline, routeTable } = this.state;
-    const { data } = timeline;
-    const { widthRatio } = routeTable.style;
-    const { widthStandardRatio } = timeline.style;
+    let nTimeline = _.clone(timeline, true);
+    let nRouteTable = _.clone(routeTable, true);
 
-    if (ctrlKey && wheelUpDirection == true && data.complexity >= 0.5) {
+    if (
+      ctrlKey &&
+      wheelUpDirection == true &&
+      nTimeline.data.complexity >= 0.5
+    ) {
       //console.log(ctrlKey);
 
-      let nTimeline = {
-        style: timeline.style,
-        data: {
-          complexity: data.complexity / 2,
-          start_time: data.start_time,
-          end_time: data.end_time
-        }
-      };
+      nTimeline.data.complexity = nTimeline.data.complexity / 2;
 
-      let nRouteTable = {
-        style: {
-          colors: routeTable.style.colors,
-          widthRatio: widthRatio * 2
-        },
-        data: routeTable.data
-      };
+      nRouteTable.style.widthRatio = nRouteTable.style.widthRatio * 2;
       //console.log(nRouteTable);
-      // this.setState({
-      //   timeline: nTimeline,
-      //   routeTable: nRouteTable
-      // });
+      this.setState({
+        timeline: nTimeline,
+        routeTable: nRouteTable
+      });
       // console.log(this.state);
+    }
+    if (
+      ctrlKey &&
+      wheelUpDirection == false &&
+      nTimeline.data.complexity <= 1
+    ) {
+      nTimeline.data.complexity = nTimeline.data.complexity * 2;
+
+      nRouteTable.style.widthRatio = nRouteTable.style.widthRatio / 2;
+      //console.log(nRouteTable);
+      this.setState({
+        timeline: nTimeline,
+        routeTable: nRouteTable
+      });
     }
   };
 
@@ -76,7 +81,7 @@ Cordinating.defaultProps = {
   timeline: {
     style: {
       widthStandardRatio: 100,
-      width: 800
+      scrollTo : 0
     },
     data: {
       complexity: 1,
