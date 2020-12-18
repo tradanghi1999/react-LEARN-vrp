@@ -17,6 +17,8 @@ class Timeline extends React.Component {
       style,
       data
     };
+
+    //console.log(this.state);
   }
 
   componentDidMount() {
@@ -25,20 +27,32 @@ class Timeline extends React.Component {
     //   end: "2015-02-02",
     //   zoom:4
     // });
+
+    const { data } = this.state;
+    const setStatus = data => {
+      this.setState({ data });
+    };
+    //console.log(data);
     let container = document.getElementById("timeline-wrapper");
     container.addEventListener(
       "wheel",
-      function(e, delta) {
+      function(e) {
         e.preventDefault();
         if (e.ctrlKey) {
           if (e.wheelDelta > 0) {
-            const { data } = this.state;
-            console.log(data)
-            // let nData = {
-            //   complexity: data.complexity/2,
-            //   start_time: data.start_time,
-            //   end_time: data.end_time
-            // }
+            let nData = {
+              complexity: data.complexity / 2,
+              start_time: data.start_time,
+              end_time: data.end_time
+            };
+            setStatus(nData);
+          } else {
+            let nData = {
+              complexity: data.complexity * 2,
+              start_time: data.start_time,
+              end_time: data.end_time
+            };
+            setStatus(nData);
           }
         } else {
           var containerScrollPosition = document.getElementById(
@@ -58,7 +72,7 @@ class Timeline extends React.Component {
   render() {
     const { style, data } = this.state;
     let colNums = (
-      (data.end_time = data.start_time) /
+      (data.end_time - data.start_time) /
       data.complexity /
       0.5
     ).toFixed(0);
