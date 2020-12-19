@@ -30,7 +30,7 @@ const Timeline = props => {
     ).scrollLeft;
     container.scrollTo({
       top: 0,
-      left: containerScrollPosition + style.scrollTo,
+      left: containerScrollPosition + props.style.scrollTo,
       behaviour: "smooth"
     });
 
