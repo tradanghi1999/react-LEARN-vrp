@@ -26,7 +26,7 @@ const Timeline = props => {
             start_time: data.start_time,
             end_time: data.end_time
           });
-        }  
+        }
       } else {
         if (data.complexity <= 1) {
           setData({
@@ -41,22 +41,23 @@ const Timeline = props => {
 
   useEffect(() => {
     let container = document.getElementById("timeline-wrapper");
-    container.scrollLeft = style.scrollTo;
+    //container.scrollLeft = style.scrollTo;
     container.addEventListener(
       "wheel",
       function(e) {
         e.preventDefault();
-        if (e.ctrlKey) {
-        } else {
-          // var containerScrollPosition = document.getElementById(
-          //   "timeline-wrapper"
-          // ).scrollLeft;
-          // container.scrollTo({
-          //   top: 0,
-          //   left: containerScrollPosition + e.deltaY,
-          //   behaviour: "smooth"
-          // });
-        }
+
+        // if (e.ctrlKey) {
+        // } else {
+        //   var containerScrollPosition = document.getElementById(
+        //     "timeline-wrapper"
+        //   ).scrollLeft;
+        //   container.scrollTo({
+        //     top: 0,
+        //     left: containerScrollPosition + e.deltaY,
+        //     behaviour: "smooth"
+        //   });
+        // }
       },
       { passive: false }
     );
