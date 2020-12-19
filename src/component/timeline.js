@@ -18,25 +18,8 @@ const Timeline = props => {
 
   const onWheelHandler = e => {
     //const { data } = this.state;
-    if (e.ctrlKey) {
-      if (e.deltaY < 0) {
-        if (data.complexity >= 0.5) {
-          setData({
-            complexity: data.complexity / 2,
-            start_time: data.start_time,
-            end_time: data.end_time
-          });
-        }
-      } else {
-        if (data.complexity <= 1) {
-          setData({
-            complexity: data.complexity * 2,
-            start_time: data.start_time,
-            end_time: data.end_time
-          });
-        }
-      }
-    }
+
+    
   };
 
   useEffect(() => {
@@ -48,6 +31,23 @@ const Timeline = props => {
         e.preventDefault();
 
         // if (e.ctrlKey) {
+        //   if (e.deltaY < 0) {
+        //     if (data.complexity >= 0.5) {
+        //       setData({
+        //         complexity: data.complexity / 2,
+        //         start_time: data.start_time,
+        //         end_time: data.end_time
+        //       });
+        //     }
+        //   } else {
+        //     if (data.complexity <= 1) {
+        //       setData({
+        //         complexity: data.complexity * 2,
+        //         start_time: data.start_time,
+        //         end_time: data.end_time
+        //       });
+        //     }
+        //   }
         // } else {
         //   var containerScrollPosition = document.getElementById(
         //     "timeline-wrapper"
