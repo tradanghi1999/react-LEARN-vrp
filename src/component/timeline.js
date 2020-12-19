@@ -25,6 +25,16 @@ const Timeline = props => {
   useEffect(() => {
     let container = document.getElementById("timeline-wrapper");
     //container.scrollLeft = style.scrollTo;
+    var containerScrollPosition = document.getElementById(
+      "timeline-wrapper"
+    ).scrollLeft;
+    container.scrollTo({
+      top: 0,
+      left: containerScrollPosition + style.scrollTo,
+      behaviour: "smooth"
+    });
+
+
     container.addEventListener(
       "wheel",
       function(e) {
@@ -49,14 +59,7 @@ const Timeline = props => {
         //     }
         //   }
         // } else {
-        //   var containerScrollPosition = document.getElementById(
-        //     "timeline-wrapper"
-        //   ).scrollLeft;
-        //   container.scrollTo({
-        //     top: 0,
-        //     left: containerScrollPosition + e.deltaY,
-        //     behaviour: "smooth"
-        //   });
+        
         // }
       },
       { passive: false }

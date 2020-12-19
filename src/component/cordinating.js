@@ -96,7 +96,7 @@ Cordinating.defaultProps = {
   timeline: {
     style: {
       widthStandardRatio: 100,
-      scrollTo: 0
+      scrollTo: 100
     },
     data: {
       complexity: 1,
