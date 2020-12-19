@@ -10,23 +10,14 @@ class Cordinating extends React.Component {
     const { timeline, routeTable } = this.state;
     let nTimeline = _.clone(timeline, true);
     let nRouteTable = _.clone(routeTable, true);
-
     if (
       ctrlKey &&
       wheelUpDirection == true &&
       nTimeline.data.complexity >= 0.5
     ) {
-      //console.log(ctrlKey);
-
       nTimeline.data.complexity = nTimeline.data.complexity / 2;
 
       nRouteTable.style.widthRatio = nRouteTable.style.widthRatio * 2;
-      //console.log(nRouteTable);
-      this.setState({
-        timeline: nTimeline,
-        routeTable: nRouteTable
-      });
-      // console.log(this.state);
     }
     if (
       ctrlKey &&
@@ -37,26 +28,20 @@ class Cordinating extends React.Component {
 
       nRouteTable.style.widthRatio = nRouteTable.style.widthRatio / 2;
       //console.log(nRouteTable);
-      this.setState({
-        timeline: nTimeline,
-        routeTable: nRouteTable
-      });
     }
-
     if (ctrlKey == false && wheelUpDirection == false) {
       nTimeline.style.scrollTo += 100;
-      this.setState({
-        timeline: nTimeline,
-        routeTable: nRouteTable
-      });
+      console.log(nTimeline.style.scrollTo);
     }
     if (ctrlKey == false && wheelUpDirection == true) {
-      if (nTimeline.style.scrollTo > 100) nTimeline.style.scrollTo -= 100;
-      this.setState({
-        timeline: nTimeline,
-        routeTable: nRouteTable
-      });
+      if (nTimeline.style.scrollTo >= 100) nTimeline.style.scrollTo -= 100;
+      console.log(nTimeline.style.scrollTo);
     }
+
+    this.setState({
+      timeline: nTimeline,
+      routeTable: nRouteTable
+    });
   };
 
   constructor(props) {
@@ -96,7 +81,7 @@ Cordinating.defaultProps = {
   timeline: {
     style: {
       widthStandardRatio: 100,
-      scrollTo: 100
+      scrollTo: 200
     },
     data: {
       complexity: 1,
