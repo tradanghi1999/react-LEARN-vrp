@@ -14,30 +14,27 @@ import _ from "lodash";
 const Timeline = props => {
   const [style, setStyle] = useState(props.style);
   const [data, setData] = useState(props.data);
-  console.log(style.scrollTo);
+  //console.log(style.scrollTo);
 
   const onWheelHandler = e => {
     //const { data } = this.state;
     if (e.ctrlKey) {
       if (e.deltaY < 0) {
-        if (data.complexity < 0.5) {
-          //this.setState({ data });
-        }
-        //this.setState({
-        else
+        if (data.complexity >= 0.5) {
           setData({
             complexity: data.complexity / 2,
             start_time: data.start_time,
             end_time: data.end_time
           });
+        }  
       } else {
-        if (data.complexity > 1) {
-        } else
+        if (data.complexity <= 1) {
           setData({
             complexity: data.complexity * 2,
             start_time: data.start_time,
             end_time: data.end_time
           });
+        }
       }
     }
   };
@@ -49,18 +46,17 @@ const Timeline = props => {
       "wheel",
       function(e) {
         e.preventDefault();
-
-        // if (e.ctrlKey) {
-        // } else {
-        //   var containerScrollPosition = document.getElementById(
-        //     "timeline-wrapper"
-        //   ).scrollLeft;
-        //   container.scrollTo({
-        //     top: 0,
-        //     left: containerScrollPosition + e.deltaY,
-        //     behaviour: "smooth"
-        //   });
-        // }
+        if (e.ctrlKey) {
+        } else {
+          // var containerScrollPosition = document.getElementById(
+          //   "timeline-wrapper"
+          // ).scrollLeft;
+          // container.scrollTo({
+          //   top: 0,
+          //   left: containerScrollPosition + e.deltaY,
+          //   behaviour: "smooth"
+          // });
+        }
       },
       { passive: false }
     );
