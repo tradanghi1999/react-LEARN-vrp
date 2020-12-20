@@ -92,4 +92,11 @@
   background-color: whitesmoke;
 }
 
+.rt-container {
+  flex-shrink: 1;
+}
 
+.rt-container,
+timeline-wrapper {
+  width: 80%;
+}
