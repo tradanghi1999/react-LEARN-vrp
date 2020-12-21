@@ -24,6 +24,8 @@ class App extends React.Component {
         isLoading: false,
         data: data
       });
+
+      console.log(data)
     });
   }
   render() {

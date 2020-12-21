@@ -35,7 +35,9 @@ class Customer extends React.Component {
       <div
         ref={this._cus}
         onClick={this.onClickHandeler}
-        className={this.state.classNameCurrent}
+        className={
+          width >= 50 ? this.state.className : this.state.classNameMini
+        }
         style={{
           width: width + "px",
           borderColor: style.color,
