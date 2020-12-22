@@ -39,7 +39,7 @@ class App extends React.Component {
       );
     return (
       <React.Fragment>
-        //<Cordinating />
+        <Cordinating />
       </React.Fragment>
     );
   }

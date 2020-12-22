@@ -5,7 +5,7 @@ import Customer from "./routechild/customer";
 import TimeTravel from "./routechild/timetravel";
 import LateStart from "./routechild/late_start";
 import PropTypes from "prop-types";
-import { selectCustomer } from "./../../../../../../footer_action";
+import { selectCustomer } from "./../../../../../footer_action";
 
 class Route extends React.Component {
   onClickCustomer = data => {
