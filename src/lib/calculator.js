@@ -86,6 +86,23 @@ const Calculator = {
     }
     return timeWindow;
   },
+  getKhoangThoiGianDenGapKhachHangDauTien(
+    timeWindows,
+    serviceTimes,
+    timeTravles
+  ) {
+    let khoangThoiGianDenGapKhachCuoiCung = this.getKhoangThoiGianDenGapKhachCuoiCung(
+      timeWindows,
+      serviceTimes,
+      timeTravles
+    );
+    return khoangThoiGianDenGapKhachCuoiCung.map(
+      x =>
+        x -
+        serviceTimes.reduce((a, b) => a + b) -
+        timeTravles.reduce((a, b) => a + b)
+    );
+  },
   randomizeThoiDiemTrongKhungGio(timeWindow) {
     let percentage = Math.random();
     return timeWindow[0] + percentage * (timeWindow[1] - timeWindow[0]);
