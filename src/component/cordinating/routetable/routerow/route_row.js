@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Route from "./route";
+import Route from "./route/route";
 import Driver from "./driver";
 import Capactity from "./capacity";
 import { Checkbox } from "antd";

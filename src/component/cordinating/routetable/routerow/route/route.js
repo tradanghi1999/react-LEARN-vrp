@@ -1,11 +1,11 @@
 import React from "react";
-import Depot from "./depot";
-import End from "./end";
-import Customer from "./customer";
-import TimeTravel from "./timetravel";
-import LateStart from "./late_start";
+import Depot from "./routechild/depot";
+import End from "./routechild/end";
+import Customer from "./routechild/customer";
+import TimeTravel from "./routechild/timetravel";
+import LateStart from "./routechild/late_start";
 import PropTypes from "prop-types";
-import { selectCustomer } from "./../footer_action";
+import { selectCustomer } from "./../../../../../../footer_action";
 
 class Route extends React.Component {
   onClickCustomer = data => {
@@ -19,7 +19,6 @@ class Route extends React.Component {
 
   onMaosWheelHandler = e => {
     console.log("Wheel");
-    
   };
 
   render() {
@@ -46,7 +45,7 @@ class Route extends React.Component {
       }
     });
     return (
-      <div  className="rt-container">
+      <div className="rt-container">
         <LateStart />
         {points}
       </div>
