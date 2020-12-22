@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import d3 from "d3";
 import moment from "moment";
 import $ from "jquery";
-import utils from "./../lib/utils";
-import time from "./../lib/time";
+import utils from "./../../../lib/utils";
+import time from "./../../../lib/time";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 
