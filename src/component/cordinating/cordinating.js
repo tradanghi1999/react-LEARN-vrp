@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RouteTable from "./route_tbl";
-import Timeline from "./timeline";
-import CordinatingHeader from "./cordinating_header";
+import RouteTable from "./routetable/route_tbl";
+import Timeline from "./timeline/timeline";
+import CordinatingHeader from "./header/cordinating_header";
 import _ from "lodash";
 class Cordinating extends React.Component {
   onMaosWheelHandler = ({ ctrlKey, wheelUpDirection }) => {
