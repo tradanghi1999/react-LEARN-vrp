@@ -68,6 +68,57 @@ const routific = {
     }
     return r;
   },
+
+  getRoutificPeriodOnRoute(index) {
+    let serviceTimesOnRoute = this.getServiceTimesOnRoute(index);
+    let timeWindowsOnRoute = this.getTimeWindowsOnRoute(index);
+    let timeTravelsOnRoute = this.getTimeTravelsOnRoute(index);
+
+    let timePeriodStartOnDepot = this.calculator.getKhoangThoiGianKhoiHanh(
+      timeWindowsOnRoute,
+      serviceTimesOnRoute,
+      timeTravelsOnRoute.filter(function(x, i) {
+        if (i == timeTravelsOnRoute.length - 1) return false;
+        return true;
+      })
+    );
+
+    let timePeriodEndOnDepot = timePeriodStartOnDepot.map(
+      x =>
+        x +
+        serviceTimesOnRoute.reduce((a, b) => a + b) +
+        timeTravelsOnRoute.reduce((a, b) => a + b)
+    );
+
+    let r = [];
+    let depotSchedule = {
+      startPeriod: timePeriodStartOnDepot,
+      endPeriod: timePeriodEndOnDepot
+    };
+    r.push(depotSchedule);
+
+    //
+    let tempSchedule = {
+      startPeriod: timePeriodStartOnDepot,
+      endPeriod: timePeriodStartOnDepot
+    };
+    for (i = 0; i < timeTravelsOnRoute.length - 1; i++) {
+      tempSchedule.startPeriod = tempSchedule.endPeriod.map(
+        x => x + timeTravelsOnRoute[i]
+      );
+      tempSchedule.endPeriod = tempSchedule.startPeriod.map(
+        x => x + serviceTimesOnRoute[i]
+      );
+      r.push(JSON.parse(JSON.stringify(tempSchedule)));
+    }
+    return r;
+  },
+  getRoutificPeriod(){
+    return this.routes.map(function(route, i) {
+      return routific.getRoutificPeriodOnRoute(i);
+    });
+  },
+
   getRoutific() {
     return this.routes.map(function(route, i) {
       return routific.getRoutificOnRoute(i);

@@ -86,11 +86,7 @@ const Calculator = {
     }
     return timeWindow;
   },
-  getKhoangThoiGianDenGapKhachHangDauTien(
-    timeWindows,
-    serviceTimes,
-    timeTravles
-  ) {
+  getKhoangThoiGianKhoiHanh(timeWindows, serviceTimes, timeTravles) {
     let khoangThoiGianDenGapKhachCuoiCung = this.getKhoangThoiGianDenGapKhachCuoiCung(
       timeWindows,
       serviceTimes,
