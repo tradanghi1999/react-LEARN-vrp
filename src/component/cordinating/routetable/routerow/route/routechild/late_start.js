@@ -4,7 +4,9 @@ const LateStart = props => {
   const { style, data } = props;
   let width =
     (data.time_value <= 0 ? 0.01 : data.time_value) * style.widthRatio;
-  return <div className="late_start" style={{ width: width + "px" }} />;
+  let minWidth = (data.time_value_min) * style.widthRatio;
+  let maxWidth = (data.time_value_max) * style.widthRatio;
+  return <div className="late_start" style={{ minWidth:  }} />;
 };
 
 LateStart.defaultProps = {
