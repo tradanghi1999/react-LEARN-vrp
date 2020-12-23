@@ -94,6 +94,7 @@
 
 .rt-container {
   flex-shrink: 1;
+  padding-left: 26px;
 }
 
 .rt-container,

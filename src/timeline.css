@@ -26,7 +26,7 @@
 .rt-container {
   display: flex;
   align-items: center;
-  
+
   flex-wrap: nowrap;
 
   /*  */
@@ -351,6 +351,12 @@
   height: 20px;
   /*  */
   flex-shrink: 0;
+  resize: horizontal;
+  overflow: hidden;
+}
+
+.late_start::-webkit-resizer {
+  display: none;
 }
 
 .late_start:hover {
