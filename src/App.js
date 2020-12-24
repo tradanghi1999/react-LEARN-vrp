@@ -10,13 +10,15 @@ import { Provider } from "react-redux";
 
 import Timeline from "./component/timeline.js";
 
+import { Layout } from "antd";
+
+const { Header, Footer, Sider, Content } = Layout;
+
 class App extends React.Component {
   state = {
     isLoading: true,
     data: null
   };
-
-  
 
   componentDidMount() {
     API.getServerCordinatingResult().subscribe(data => {
@@ -25,7 +27,7 @@ class App extends React.Component {
         data: data
       });
 
-      console.log(data)
+      console.log(data);
     });
   }
   render() {
@@ -38,9 +40,13 @@ class App extends React.Component {
         </div>
       );
     return (
-      <React.Fragment>
-        <Cordinating />
-      </React.Fragment>
+
+      <Layout>
+      <Header>Header</Header>
+      <Content>Content</Content>
+      <Footer><Cordinating /></Footer>
+    </Layout>
+
     );
   }
 }
