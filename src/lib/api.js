@@ -15,6 +15,32 @@ const order_url = "https://mwg-vrp.herokuapp.com/create/random/vehicles";
 
 // du lieu fix cung
 const index_route_url = "https://mwg-vrp.herokuapp.com/api/getIndexRoutes";
+const API_Request_Constants = {
+  CHUYEN_TRAI: "CHUYEN_TRAI",
+  CHUYEN_PHAI: "CHUYEN_PHAI",
+  DOI_CHO: "DOI_CHO"
+};
+
+const API_Request = {
+  chuyenTrai(cusId) {
+    return {
+      type: API_Request_Constants.CHUYEN_TRAI,
+      data: cusId
+    };
+  },
+  chuyenPhai(cusId) {
+    return {
+      type: API_Request_Constants.CHUYEN_PHAI,
+      data: cusId
+    };
+  },
+  doiCho(cusId1, cusId2) {
+    return {
+      type: API_Request_Constants.DOI_CHO,
+      data: [cusId1, cusId2]
+    };
+  }
+};
 
 const API = {
   getCustomers() {
@@ -218,6 +244,67 @@ const API = {
       })
     );
     return result$;
+  },
+  
+  computeTransaction(routesAcordId, apiRequest) {
+    let routeIndexContainCus;
+    let routesClone;
+    let cusIndex;
+    switch (apiRequest.type) {
+      case API_Request_Constants.CHUYEN_TRAI:
+        routeIndexContainCus = routesAcordId.find(r =>
+          r.includes(apiRequest.data)
+        );
+
+        routesClone = _.clone(routesAcordId, true);
+
+        cusIndex = routesClone[routeIndexContainCus].find(cusId);
+        if (cusIndex < 1) return routesAcordId;
+        routesClone[routeIndexContainCus][cusIndex] =
+          routesClone[routeIndexContainCus][cusIndex - 1];
+        routesClone[routeIndexContainCus][cusIndex - 1] = cusId;
+        return routesClone;
+
+      case API_Request_Constant.CHUYEN_PHAI:
+        routeIndexContainCus = routesAcordId.find(r =>
+          r.includes(apiRequest.data)
+        );
+
+        routesClone = _.clone(routesAcordId, true);
+
+        cusIndex = routesClone[routeIndexContainCus].find(cusId);
+        if (cusIndex < 1) return routesAcordId;
+        routesClone[routeIndexContainCus][cusIndex] =
+          routesClone[routeIndexContainCus][cusIndex + 1];
+        routesClone[routeIndexContainCus][cusIndex + 1] = cusId;
+        return routesClone;
+
+      case API_Request_Constants.DOI_CHO:
+        let routeIndexContainCus1 = routesAcordId.find(r =>
+          r.includes(apiRequest.data[0])
+        );
+
+        let routeIndexContainCus2 = routesAcordId.find(r =>
+          r.includes(apiRequest.data[1])
+        );
+
+        routesClone = _.clone(routesAcordId, true);
+
+        let cus1Index = routesClone[routeIndexContainCus1].find(
+          apiRequest.data[0]
+        );
+
+        let cus2Index = routesClone[routeIndexContainCus2].find(
+          apiRequest.data[1]
+        );
+
+        routesClone[routeIndexContainCus1][cus1Index] = apiRequest.data[1];
+        routesClone[routeIndexContainCus2][cus2Index] = apiRequest.data[0];
+        return routesClone;
+
+      default:
+        return routesAcordId;
+    }
   }
 };
 
