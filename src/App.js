@@ -14,6 +14,10 @@ import { Layout } from "antd";
 
 const { Header, Footer, Sider, Content } = Layout;
 
+import { Collapse } from "antd";
+
+const { Panel } = Collapse;
+
 class App extends React.Component {
   state = {
     isLoading: true,
@@ -40,13 +44,17 @@ class App extends React.Component {
         </div>
       );
     return (
-
       <Layout>
-      <Header>Header</Header>
-      <Content>Content</Content>
-      <Footer><Cordinating /></Footer>
-    </Layout>
-
+        <Header>Header</Header>
+        <Content>Content</Content>
+        <Footer>
+          <Collapse>
+            <Panel header="This is panel header 1" key="1">
+              <Cordinating />
+            </Panel>
+          </Collapse>
+        </Footer>
+      </Layout>
     );
   }
 }

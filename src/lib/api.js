@@ -16,6 +16,33 @@ const order_url = "https://mwg-vrp.herokuapp.com/create/random/vehicles";
 // du lieu fix cung
 const index_route_url = "https://mwg-vrp.herokuapp.com/api/getIndexRoutes";
 
+const API_Request_Constants = {
+  CHUYEN_TRAI: "CHUYEN_TRAI",
+  CHUYEN_PHAI: "CHUYEN_PHAI",
+  DOI_CHO: "DOI_CHO"
+};
+
+const API_Request = {
+  chuyenTrai(cusId) {
+    return {
+      type: API_Request_Constants.CHUYEN_TRAI,
+      data: cusId
+    };
+  },
+  chuyenPhai(cusId) {
+    return {
+      type: API_Request_Constants.CHUYEN_PHAI,
+      data: cusId
+    };
+  },
+  doiCho(cusId1, cusId2) {
+    return {
+      type: API_Request_Constants.DOI_CHO,
+      data: [cusId1, cusId2]
+    };
+  }
+};
+
 const API = {
   getCustomers() {
     let customer$ = from(ajax.getJson(customer_url)).pipe(
@@ -191,15 +218,15 @@ const API = {
 
         let rRG = rG.map((x, i) => {
           let driver;
-          if(drivers[i]==null)
-            driver= {
+          if (drivers[i] == null)
+            driver = {
               id: 0,
               name: "Unknown",
               total_inMonth: 0,
               total_inDay: 0
-            }
-          else{
-            driver = _.clone(drivers[i],true)
+            };
+          else {
+            driver = _.clone(drivers[i], true);
           }
           let d = {
             capacity_percentage: (
