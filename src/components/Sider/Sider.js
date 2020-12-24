@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import { Layout } from "antd";
 import { CarOutlined } from "@ant-design/icons";
 
+import "../../css/Sider.scss";
+
 const { Sider } = Layout;
 
 function SiderComponent() {
   return (
-    <Sider theme="light" width="60">
-      <Link to="/">
-        <div className="logo">
-          <CarOutlined style={{ fontSize: "30px", color: "#008000" }} />
-        </div>
+    <Sider theme="light" breakpoint="xxl">
+      <Link to="/" className="logo">
+        <CarOutlined style={{ fontSize: "40px" }} />
       </Link>
     </Sider>
   );

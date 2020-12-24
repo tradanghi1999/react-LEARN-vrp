@@ -1,8 +1,11 @@
 import _ from "lodash";
 
-import { FETCH_INITIAL_DETAIL_ORDERS } from "../constants/constantOrders";
+import {
+  FETCH_INITIAL_DETAIL_ORDERS,
+  GET_SUB_ORDERS,
+} from "../constants/constantOrders";
 
-const reducersFetchRoutes = (state = [], action) => {
+const reducerFetchOrders = (state = [], action) => {
   switch (action.type) {
     case FETCH_INITIAL_DETAIL_ORDERS:
       return _.cloneDeep(action.payload);
@@ -11,4 +14,13 @@ const reducersFetchRoutes = (state = [], action) => {
   }
 };
 
-export default reducersFetchRoutes;
+const reducerSubOrders = (state = [], action) => {
+  switch (action.type) {
+    case GET_SUB_ORDERS:
+      return _.cloneDeep(action.data);
+    default:
+      return state;
+  }
+};
+
+export { reducerFetchOrders, reducerSubOrders };

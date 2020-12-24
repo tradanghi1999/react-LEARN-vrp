@@ -1,96 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Drawer, Spin, Table, Button } from "antd";
+import { Drawer, Table, Button } from "antd";
 
-const columns = [
-  { title: "Tuyến đường", dataIndex: "key", key: "key" },
-  {
-    title: "Số khách hàng",
-    dataIndex: "totalCustomers",
-    key: "totalCustomers",
-  },
-  {
-    title: "Tổng cân nặng (kg)",
-    dataIndex: "totalWeight",
-    key: "totalWeight",
-  },
-];
-
-const subColumns = [
-  { title: "Tên khách hàng", dataIndex: "name", key: "name" },
-  { title: "Địa chỉ", dataIndex: "place", key: "place" },
-  { title: "Cân nặng (kg)", dataIndex: "weight", key: "weight" },
-  {
-    title: "Thời gian phục vụ (h)",
-    dataIndex: "serviceTime",
-    key: "serviceTime",
-  },
-  {
-    title: "Thời gian nhận hàng (h)",
-    dataIndex: "timeWindow",
-    key: "timeWindow",
-  },
-];
-
-const convertDataMatchFormTable = (routes) => {
-  let newRoutes = [];
-
-  for (let i = 0; i < routes.length; i++) {
-    const subRoutes = routes[i];
-    const detailRoutes = [];
-
-    for (let j = 1; j < subRoutes.length - 1; j++) {
-      const order = subRoutes[j];
-      const { id, name, place } = order;
-      const { long, lat, serviceTime, timeWindow, weight } = order.order;
-
-      detailRoutes.push({
-        key: j,
-        id,
-        name,
-        place,
-        weight,
-        serviceTime,
-        timeWindow: `${timeWindow[0]} - ${timeWindow[1]}`,
-        long,
-        lat,
-      });
-    }
-
-    let totalWeight = 0;
-    detailRoutes.forEach((order) => (totalWeight += order.weight));
-
-    newRoutes.push({
-      key: i + 1,
-      totalCustomers: detailRoutes.length,
-      totalWeight,
-      routes: detailRoutes,
-    });
-  }
-
-  return newRoutes;
-};
+import {
+  columnsRoutes,
+  subColumnsRoutes,
+  convertDataMatchFormTableRoutes,
+} from "./constants";
 
 function DrawerRoutes({
   routes,
-  handleSubRoute,
   handleRoutes,
+  handleSubRoute,
   processingRouting,
   onClose,
   visible,
 }) {
   const [stateRoutes, setStateRoutes] = useState([]);
-  const [spinning, setSpinning] = useState(true);
+  const [loadingTable, setLoadingTable] = useState(true);
 
   useEffect(() => {
-    const data = convertDataMatchFormTable(routes);
+    const data = convertDataMatchFormTableRoutes(routes);
     setStateRoutes(data);
     return () => {
-      setSpinning(false);
+      setLoadingTable(false);
     };
   }, [routes]);
 
   const parentColumns = [
-    ...columns,
+    ...columnsRoutes,
     {
       key: "routing",
       width: 100,
@@ -113,9 +50,9 @@ function DrawerRoutes({
           type="primary"
           block={true}
           onClick={() => {
-            const temponaryRoutes = routes[index.key - 1];
+            const route = routes[index.key - 1];
             processingRouting(index.key);
-            handleSubRoute(temponaryRoutes);
+            handleSubRoute(route);
           }}
         >
           Xem chỉ đường
@@ -123,11 +60,11 @@ function DrawerRoutes({
       ),
     },
   ];
-  const childrenColumns = [...subColumns];
+  const childrenColumns = [...subColumnsRoutes];
 
   return (
     <Drawer
-      title={`Tổng số tuyến: ${stateRoutes.length}`}
+      title={`Routes - Tổng số tuyến: ${stateRoutes.length}`}
       placement="left"
       key="left"
       width="70%"
@@ -135,28 +72,20 @@ function DrawerRoutes({
       visible={visible}
       closable={true}
     >
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div style={{ flexGrow: 1 }}>
-          <Spin
-            spinning={spinning}
-            tip="Đang lấy dữ liệu, xin vui lòng chờ ..."
-          >
+      <Table
+        columns={parentColumns}
+        dataSource={stateRoutes}
+        loading={loadingTable}
+        expandable={{
+          expandedRowRender: (record) => (
             <Table
-              columns={parentColumns}
-              dataSource={stateRoutes}
-              expandable={{
-                expandedRowRender: (record) => (
-                  <Table
-                    columns={childrenColumns}
-                    dataSource={record.routes}
-                    pagination={false}
-                  />
-                ),
-              }}
+              columns={childrenColumns}
+              dataSource={record.routes}
+              pagination={false}
             />
-          </Spin>
-        </div>
-      </div>
+          ),
+        }}
+      />
     </Drawer>
   );
 }

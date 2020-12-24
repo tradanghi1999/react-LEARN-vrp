@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
 
-import "../../css/Header.css";
+import "../../css/Header.scss";
 import MenuItems from "../../containers/Header/MenuItems";
 import DrawerOrders from "../../containers/Header/DrawerOrders";
 import DrawerRoutes from "../../containers/Header/DrawerRoutes";
+import DrawerSubRoutes from "../../containers/Header/DrawerSubRoutes";
 
 const { Header } = Layout;
 
 function HeaderComponent({
-  statusRouting,
   fetchInitialDetailOrder,
   fetchRoutes,
+  subRoutes,
+  allRoutes,
+  routesOfCustomerSelect,
 }) {
   const [visibleOrders, setVisibleOrders] = useState(false);
   const [visibleRoutes, setVisibleRoutes] = useState(false);
+  const [visibleSubRoutes, setVisibleSubRoutes] = useState(false);
 
   useEffect(() => {
     fetchInitialDetailOrder();
@@ -23,17 +27,26 @@ function HeaderComponent({
   }, [fetchInitialDetailOrder, fetchRoutes]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setVisibleRoutes(statusRouting);
-    }, 1000);
+    if (routesOfCustomerSelect.length !== 0) {
+      setVisibleSubRoutes(true);
+      setVisibleOrders(false);
+    }
     return () => {};
-  }, [statusRouting]);
+  }, [routesOfCustomerSelect]);
+
+  useEffect(() => {
+    return () => {
+      setVisibleRoutes(false);
+      setVisibleSubRoutes(false);
+    };
+  }, [subRoutes, allRoutes]);
 
   return (
-    <Header style={{ padding: 0, position: "fixed", zIndex: 1, width: "100%" }}>
+    <Header style={{ position: "fixed", zIndex: 1, width: "100%", padding: 0 }}>
       <MenuItems
         handleTabOrders={() => setVisibleOrders(true)}
         handleTabRoutes={() => setVisibleRoutes(true)}
+        handleTabSubRoutes={() => setVisibleSubRoutes(true)}
       />
       <DrawerOrders
         onClose={() => setVisibleOrders(false)}
@@ -42,6 +55,10 @@ function HeaderComponent({
       <DrawerRoutes
         onClose={() => setVisibleRoutes(false)}
         visible={visibleRoutes}
+      />
+      <DrawerSubRoutes
+        onClose={() => setVisibleSubRoutes(false)}
+        visible={visibleSubRoutes}
       />
     </Header>
   );

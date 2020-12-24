@@ -1,14 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
-import "../../css/WebMapView.css";
+import "../../css/WebMapView.scss";
 import { handleSubRoutes, handleAllRoutes } from "../../library/mapView";
 
-const WebMapView = ({
-  subRoutes,
-  allRoutes,
-  statusRouting,
-  completeProcessingRouting,
-}) => {
+const WebMapView = ({ subRoutes, allRoutes }) => {
   const mapRef = useRef();
 
   useEffect(() => {
@@ -22,12 +17,6 @@ const WebMapView = ({
     }
     return () => {};
   }, [allRoutes]);
-
-  useEffect(() => {
-    return () => {
-      completeProcessingRouting();
-    };
-  }, [statusRouting, completeProcessingRouting]);
 
   return <div className="webmap" ref={mapRef} />;
 };

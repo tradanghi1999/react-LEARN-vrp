@@ -4,7 +4,7 @@ import { Layout } from "antd";
 import Header from "../containers/Header/Header";
 import Sider from "./Sider/Sider";
 import Content from "./Content/Content";
-import Footer from "../containers/Footer/Footer";
+import Footer from "../components/Footer/Footer";
 
 function ComponentLayout() {
   return (

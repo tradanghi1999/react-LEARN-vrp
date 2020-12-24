@@ -1,21 +1,28 @@
 import * as constantOrders from "../constants/constantOrders";
-import { serFetchInitialDetailOrders } from "../services/serviceInitialDetailOrders";
+import { fetchInitialDetailOrders } from "../api/api";
 
-export const receiveInitialDetailOrders = (json) => {
+export const actionInitialDetailOrders = (json) => {
   return {
     type: constantOrders.FETCH_INITIAL_DETAIL_ORDERS,
     payload: json,
   };
 };
 
-export function fetchInitialDetailOrders() {
+export const getInitialDetailOrders = () => {
   return (dispatch) => {
-    return serFetchInitialDetailOrders()
+    return fetchInitialDetailOrders()
       .then((response) => {
-        dispatch(receiveInitialDetailOrders(response.data.orders));
+        dispatch(actionInitialDetailOrders(response.data.orders));
       })
       .catch((error) =>
         console.log("Fetch Initial Detail Orders Axios Error", error)
       );
   };
-}
+};
+
+export const actionGetSubOrders = (data) => {
+  return {
+    type: constantOrders.GET_SUB_ORDERS,
+    data,
+  };
+};

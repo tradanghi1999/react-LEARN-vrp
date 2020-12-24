@@ -7,7 +7,7 @@ const { Content } = Layout;
 
 function ContentComponent() {
   return (
-    <Content style={{ marginTop: 64, padding: 5, height: "82vh" }}>
+    <Content style={{ marginTop: 64 }}>
       <WebMapView />
     </Content>
   );

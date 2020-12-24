@@ -1,21 +1,21 @@
 import { connect } from "react-redux";
 
 import Header from "../../components/Header/Header";
-import { fetchInitialDetailOrders } from "../../actions/actionOrders";
-
+import { getInitialDetailOrders } from "../../actions/actionOrders";
 import { fetchRoutes } from "../../actions/actionRoutes";
 
 const mapStateToProps = (state) => {
   return {
-    initialOrders: state.reducerFetchOrders,
-    statusRouting: state.statusRouting,
+    routesOfCustomerSelect: state.reducerRoutesFromCustomerSelect,
+    subRoutes: state.reducerSubRoutes,
+    allRoutes: state.reducerAllRoutes,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchInitialDetailOrder: () => {
-      dispatch(fetchInitialDetailOrders());
+      dispatch(getInitialDetailOrders());
     },
     fetchRoutes: () => {
       dispatch(fetchRoutes());

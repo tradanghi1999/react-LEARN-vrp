@@ -1,18 +1,24 @@
 import { connect } from "react-redux";
 
 import DrawerOrders from "../../components/Header/DrawerOrders";
-import { fetchInitialDetailOrders } from "../../actions/actionOrders";
+import { actionGetSubOrders } from "../../actions/actionOrders";
+import { receiveRoutesFromRandomOrders } from "../../actions/actionRoutes";
+import { actionSubmitOrdersButton } from "../../actions/actionStatus";
 
 const mapStateToProps = (state) => {
   return {
     initialOrders: state.reducerFetchOrders,
+    subRoutes: state.reducerSubOrders,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchInitialDetailOrder: () => {
-      dispatch(fetchInitialDetailOrders());
+    getSubRoutes: (data) => {
+      dispatch(actionGetSubOrders(data));
+    },
+    fetchRoutesFromSelectOrders: (data) => {
+      dispatch(receiveRoutesFromRandomOrders(data));
     },
   };
 };

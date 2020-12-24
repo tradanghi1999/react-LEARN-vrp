@@ -1,20 +1,38 @@
 import { combineReducers } from "redux";
 
+// import reduce footer
+import cordinating from './Footer/cordinating';
+import timeline from './Footer/timeline';
+import routeTable from './Footer/routeTable';
+import drivers from './Footer/drivers'
+// import reduce footer
+
 import reducerTest from "./reducerTest";
-import reducerFetchRoutes from "./reducerFetchRoutes";
-import reducerFetchOrders from "./reducerFetchOrders";
-import reducerSubRoutes from "./reducerSubRoutes";
-import reducerAllRoutes from "./reducerAllRoutes";
-import { statusRouting, routeNumberProcessed } from "./reducerStatus";
+import {
+  reducerAllRoutes,
+  reducerFetchRoutes,
+  reducerSubRoutes,
+  reducerRoutesDriversOrders,
+  reducerRoutesFromCustomerSelect,
+} from "./reducerFetchRoutes";
+import { reducerFetchOrders, reducerSubOrders } from "./reducerFetchOrders";
+import { routeNumberProcessed } from "./reducerStatus";
 
 const rootReducer = combineReducers({
-  reducerTest,
   reducerFetchRoutes,
   reducerFetchOrders,
-  reducerSubRoutes,
   reducerAllRoutes,
-  statusRouting,
+  reducerSubRoutes,
+  reducerRoutesFromCustomerSelect,
+  reducerRoutesDriversOrders,
+  reducerSubOrders,
+
   routeNumberProcessed,
+
+  ///reducer foooter
+  cordinating,routeTable,timeline,drivers
+
+
 });
 
 export default rootReducer;

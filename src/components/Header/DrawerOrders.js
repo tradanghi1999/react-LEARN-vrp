@@ -1,92 +1,73 @@
 import React, { useEffect, useState } from "react";
-import { Drawer, Spin, Table } from "antd";
+import { Drawer, Table, Button } from "antd";
+import _ from "lodash";
 
-const columns = [
-  {
-    title: "Số thứ tự",
-    dataIndex: "key",
-  },
-  {
-    title: "Tên khách hàng",
-    dataIndex: "name",
-  },
-  {
-    title: "Địa chỉ",
-    dataIndex: "place",
-  },
-  {
-    title: "Cân nặng (kg)",
-    dataIndex: "weight",
-  },
-  {
-    title: "Thời gian phục vụ (h)",
-    dataIndex: "serviceTime",
-  },
-  {
-    title: "Thời gian khách nhận hàng (h)",
-    dataIndex: "timeWindow",
-  },
-];
+import { columnsOrders, convertDataToMatchFormTableOrders } from "./constants";
 
-const convertDataToMatchFormTable = (orders) => {
-  let resultData = orders.map((order, index) => {
-    const { id, name, place } = order;
-    const { weight, serviceTime, timeWindow, long, lat } = order.order;
-
-    return {
-      key: index + 1,
-      id,
-      name,
-      place,
-      weight,
-      serviceTime,
-      timeWindow: `${timeWindow[0]} - ${timeWindow[1]}`,
-      long,
-      lat,
-    };
-  });
-
-  return resultData;
-};
-
-function DrawerOrders({ initialOrders, onClose, visible }) {
+function DrawerOrders({
+  initialOrders,
+  subRoutes,
+  getSubRoutes,
+  fetchRoutesFromSelectOrders,
+  onClose,
+  visible,
+}) {
   const [orders, setOrders] = useState([]);
-  const [spinning, setSpinning] = useState(true);
+  const [loadingTable, setLoadingTable] = useState(true);
+  const [localSubRoutes, setLocalSubRoutes] = useState([]);
 
   useEffect(() => {
-    const orders = convertDataToMatchFormTable(initialOrders);
+    const orders = convertDataToMatchFormTableOrders(initialOrders);
     setOrders(orders);
-
-    return () => {
-      setSpinning(false);
-    };
+    if (orders.length !== 0) {
+      setLoadingTable(false);
+    }
+    return () => {};
   }, [initialOrders]);
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) =>
+      setLocalSubRoutes(selectedRows),
+  };
+
+  const btnSubmitSubRoutes = () => {
+    if (!_.isEqual(localSubRoutes, subRoutes)) {
+      getSubRoutes(localSubRoutes);
+      fetchRoutesFromSelectOrders(localSubRoutes);
+    }
+  };
 
   return (
     <Drawer
-      title={`Tổng số đơn hàng: ${orders.length - 1}`}
+      title={`Tổng số đơn hàng: ${orders.length}`}
       placement="left"
       key="left"
       width="70%"
       onClose={onClose}
       visible={visible}
       closable={true}
+      footer={
+        <div style={{ textAlign: "right" }}>
+          <Button
+            type="primary"
+            onClick={btnSubmitSubRoutes}
+            disabled={localSubRoutes.length === 0 ? true : false}
+          >
+            Submit Orders
+          </Button>
+        </div>
+      }
     >
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Spin spinning={spinning} tip="Đang lấy dữ liệu, xin vui lòng chờ ...">
-          <Table
-            rowSelection={{
-              type: "checkbox",
-              getCheckboxProps: (record) => ({
-                name: record.name,
-              }),
-            }}
-            columns={columns}
-            dataSource={orders}
-            scroll={{ y: 450 }}
-          />
-        </Spin>
-      </div>
+      <Table
+        rowSelection={{
+          type: "checkbox",
+          ...rowSelection,
+        }}
+        columns={columnsOrders}
+        dataSource={orders}
+        scroll={{ y: 450 }}
+        loading={loadingTable}
+      />
     </Drawer>
   );
 }
