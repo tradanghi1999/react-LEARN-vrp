@@ -245,7 +245,28 @@ const API = {
     );
     return result$;
   },
-  
+
+  getRoutesAcordId() {
+    let result$ = forkJoin(
+      this.getOrders(),
+      this.getVehicles(),
+      this.getCustomers(),
+      this.getDrivers()
+    ).pipe(
+      map(([orders, vehicles, customers, drivers]) => {
+        vrp.import(orders, vehicles);
+        let routes = vrp.run(20);
+
+        return routes.map(r => {
+          return r.map(function(nodes, i) {
+            return orders[nodes].id;
+          });
+        });
+      })
+    );
+    return result$;
+  },
+
   computeTransaction(routesAcordId, apiRequest) {
     let routeIndexContainCus;
     let routesClone;

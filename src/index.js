@@ -10,6 +10,12 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import reducer from "./reducers";
 
+import API from "./lib/api";
+
+API.getRoutesAcordId().subscribe(routesAcordId => {
+  console.log(routesAcordId);
+});
+
 const logger = createLogger({
   // ...options
 });

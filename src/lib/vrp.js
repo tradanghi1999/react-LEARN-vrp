@@ -459,7 +459,7 @@ const vrp = {
           CalTotalTimeFirstRoute = CalTotalTimeRoute;
         }
 
-        console.log("RouteFinish,RouteFinish,RouteFinish", RouteFinish);
+        //console.log("RouteFinish,RouteFinish,RouteFinish", RouteFinish);
       }
     }
     return this.getRoutific(RouteFinish);
