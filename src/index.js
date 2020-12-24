@@ -14,6 +14,11 @@ import API from "./lib/api";
 
 API.getRoutesAcordId().subscribe(routesAcordId => {
   console.log(routesAcordId);
+  console.log(
+    API.computeTransaction(routesAcordId,{
+      type: "CHUYEN_PHAI",
+      data: 142169
+    }))
 });
 
 const logger = createLogger({

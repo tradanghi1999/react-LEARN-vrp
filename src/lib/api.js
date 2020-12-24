@@ -271,37 +271,67 @@ const API = {
     let routeIndexContainCus;
     let routesClone;
     let cusIndex;
+    let routesWithKey;
+
     switch (apiRequest.type) {
       case API_Request_Constants.CHUYEN_TRAI:
-        routeIndexContainCus = routesAcordId.find(r =>
-          r.includes(apiRequest.data)
-        );
+        console.log(apiRequest.data);
+        routesWithKey = routesAcordId.map(function(r, i) {
+          return {
+            stt: i,
+            nodes: r
+          };
+        });
 
+        routeIndexContainCus = routesWithKey.filter(x =>
+          x.nodes.includes(apiRequest.data)
+        )[0].stt;
         routesClone = _.clone(routesAcordId, true);
 
-        cusIndex = routesClone[routeIndexContainCus].find(cusId);
-        if (cusIndex < 1) return routesAcordId;
+        cusIndex = routesClone[routeIndexContainCus]
+          .map((node, i) => {
+            return {
+              stt: i,
+              node: node
+            };
+          })
+          .filter(x => x.node == apiRequest.data)[0].stt;
+        //console.log(cusIndex);
+        if (cusIndex < 2) return routesAcordId;
         routesClone[routeIndexContainCus][cusIndex] =
           routesClone[routeIndexContainCus][cusIndex - 1];
-        routesClone[routeIndexContainCus][cusIndex - 1] = cusId;
+        routesClone[routeIndexContainCus][cusIndex - 1] = apiRequest.data;
         return routesClone;
 
-      case API_Request_Constant.CHUYEN_PHAI:
-        routeIndexContainCus = routesAcordId.find(r =>
-          r.includes(apiRequest.data)
-        );
+      case API_Request_Constants.CHUYEN_PHAI:
+        routesWithKey = routesAcordId.map(function(r, i) {
+          return {
+            stt: i,
+            nodes: r
+          };
+        });
 
+        routeIndexContainCus = routesWithKey.filter(x =>
+          x.nodes.includes(apiRequest.data)
+        )[0].stt;
         routesClone = _.clone(routesAcordId, true);
 
-        cusIndex = routesClone[routeIndexContainCus].find(cusId);
-        if (cusIndex < 1) return routesAcordId;
+        cusIndex = routesClone[routeIndexContainCus]
+          .map((node, i) => {
+            return {
+              stt: i,
+              node: node
+            };
+          })
+          .filter(x => x.node == apiRequest.data)[0].stt;
+        if (cusIndex > routesClone[routeIndexContainCus].length - 2)
+          return routesAcordId;
         routesClone[routeIndexContainCus][cusIndex] =
           routesClone[routeIndexContainCus][cusIndex + 1];
-        routesClone[routeIndexContainCus][cusIndex + 1] = cusId;
+        routesClone[routeIndexContainCus][cusIndex + 1] = apiRequest.data;
         return routesClone;
 
-      case API_Request_Constants.DOI_CHO:
-        let routeIndexContainCus1 = routesAcordId.find(r =>
+      case API_Request_Constants.DOI_CHO:        let routeIndexContainCus1 = routesAcordId.find(r =>
           r.includes(apiRequest.data[0])
         );
 
