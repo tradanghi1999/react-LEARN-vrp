@@ -34,7 +34,13 @@ const ajax = {
           return x;
         })
       );
-  }
+  },
+  getDataRender(url) {
+    return $.ajax({
+      url: url,
+      dataType: "xml"
+    });
+  },
 };
 
 export default ajax;

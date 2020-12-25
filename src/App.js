@@ -1,72 +1,35 @@
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import React from "react";
+import "./App.scss";
+import Test from "./containers/Test";
+import Layout from "./containers/Layout";
 import "./style.css";
-import Cordinating from "./component/cordinating/cordinating";
-import "antd/dist/antd.css";
 import "./timeline.css";
-import "./antd.css";
 import "./tl.css";
-import API from "./lib/api";
-import { Provider } from "react-redux";
 
-import Timeline from "./component/timeline.js";
 
 class App extends React.Component {
-  state = {
-    isLoading: true,
-    data: null
-  };
+  // componentDidUpdate(){
+  //   e.preventDefault();
+  //   let container = document.document.getElementsById("timeline-wrapper");
+  //   container.addEventListener("wheel", function(e){
+  //     e.preventDefault();
+  //   }, {passive: false})
+  // }
+  render(){
 
-  
-
-  componentDidMount() {
-    API.getServerCordinatingResult().subscribe(data => {
-      this.setState({
-        isLoading: false,
-        data: data
-      });
-
-      console.log(data)
-    });
-  }
-  render() {
-    const { isLoading, data } = this.state;
-    if (isLoading)
-      return (
-        <div>
-          <h1>Hello StackBlitz!</h1>
-          <p>Start editing to see some magic happen :)</p>
-        </div>
-      );
     return (
-      <React.Fragment>
-        <Cordinating />
-      </React.Fragment>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/test" component={Test} />
+            <Route exact path="/" component={Layout} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
-}
+  }
+
 
 export default App;
-
-//
-//<Depot />
-// <Customer
-//   style={{
-//     color: "#000",
-//     widthRatio: 100
-//   }}
-//   data={{
-//     ServiceTime: 0.5,
-//     name: "Anh Hieu"
-//   }}
-// />
-
-// <TimeTravel />
-// <Capacity />
-// <Driver
-//   data={{
-//     name: "Nghia",
-//     totalInMonth: "33",
-//     totalToday: "1"
-//   }}
-// />
-// <End />

@@ -15,6 +15,32 @@ const order_url = "https://mwg-vrp.herokuapp.com/create/random/vehicles";
 
 // du lieu fix cung
 const index_route_url = "https://mwg-vrp.herokuapp.com/api/getIndexRoutes";
+const API_Request_Constants = {
+  CHUYEN_TRAI: "CHUYEN_TRAI",
+  CHUYEN_PHAI: "CHUYEN_PHAI",
+  DOI_CHO: "DOI_CHO"
+};
+
+const API_Request = {
+  chuyenTrai(cusId) {
+    return {
+      type: API_Request_Constants.CHUYEN_TRAI,
+      data: cusId
+    };
+  },
+  chuyenPhai(cusId) {
+    return {
+      type: API_Request_Constants.CHUYEN_PHAI,
+      data: cusId
+    };
+  },
+  doiCho(cusId1, cusId2) {
+    return {
+      type: API_Request_Constants.DOI_CHO,
+      data: [cusId1, cusId2]
+    };
+  }
+};
 
 const API = {
   getCustomers() {
@@ -43,13 +69,13 @@ const API = {
         id: 142025,
         name: "Nghĩa",
         total_inMonth: 35,
-        total_inDay: 0
+        total_inDay: 10
       },
       {
         id: 142188,
         name: "Cơ",
         total_inMonth: 35,
-        total_inDay: 0
+        total_inDay: 9
       },
       {
         id: 142171,
@@ -61,43 +87,43 @@ const API = {
         id: 142173,
         name: "Cường",
         total_inMonth: 35,
-        total_inDay: 0
+        total_inDay: 7
       },
       {
         id: 142186,
         name: "Nga",
-        total_inMonth: 35,
-        total_inDay: 0
+        total_inMonth: 25,
+        total_inDay: 5
       },
       {
         id: 142169,
         name: "Long",
-        total_inMonth: 35,
+        total_inMonth: 15,
         total_inDay: 0
       },
       {
         id: 142179,
         name: "Trí",
-        total_inMonth: 35,
-        total_inDay: 0
+        total_inMonth: 20,
+        total_inDay: 2
       },
       {
         id: 142198,
         name: "Hưng",
         total_inMonth: 35,
-        total_inDay: 0
+        total_inDay: 3
       },
       {
         id: 16901,
         name: "Anh Ruy",
         total_inMonth: 35,
-        total_inDay: 0
+        total_inDay: 1
       },
       {
         id: 142168,
         name: "Trang",
         total_inMonth: 35,
-        total_inDay: 0
+        total_inDay: 2
       }
     ];
 
@@ -117,7 +143,7 @@ const API = {
     ).pipe(
       map(([orders, vehicles, customers, drivers]) => {
         vrp.import(orders, vehicles);
-        let routes = vrp.run();
+        let routes = vrp.run(20);
         return [orders, routes, customers, vehicles, drivers];
       }),
       map(([orders, routes, customers, vehicles, drivers]) => {
@@ -191,15 +217,15 @@ const API = {
 
         let rRG = rG.map((x, i) => {
           let driver;
-          if(drivers[i]==null)
-            driver= {
+          if (drivers[i] == null)
+            driver = {
               id: 0,
               name: "Unknown",
               total_inMonth: 0,
               total_inDay: 0
-            }
-          else{
-            driver = _.clone(drivers[i],true)
+            };
+          else {
+            driver = _.clone(drivers[i], true);
           }
           let d = {
             capacity_percentage: (
@@ -218,6 +244,118 @@ const API = {
       })
     );
     return result$;
+  },
+
+  getRoutesAcordId() {
+    let result$ = forkJoin(
+      this.getOrders(),
+      this.getVehicles(),
+      this.getCustomers(),
+      this.getDrivers()
+    ).pipe(
+      map(([orders, vehicles, customers, drivers]) => {
+        vrp.import(orders, vehicles);
+        let routes = vrp.run(20);
+
+        return routes.map(r => {
+          return r.map(function(nodes, i) {
+            return orders[nodes].id;
+          });
+        });
+      })
+    );
+    return result$;
+  },
+
+  computeTransaction(routesAcordId, apiRequest) {
+    let routeIndexContainCus;
+    let routesClone;
+    let cusIndex;
+    let routesWithKey;
+
+    switch (apiRequest.type) {
+      case API_Request_Constants.CHUYEN_TRAI:
+        console.log(apiRequest.data);
+        routesWithKey = routesAcordId.map(function(r, i) {
+          return {
+            stt: i,
+            nodes: r
+          };
+        });
+
+        routeIndexContainCus = routesWithKey.filter(x =>
+          x.nodes.includes(apiRequest.data)
+        )[0].stt;
+        routesClone = _.clone(routesAcordId, true);
+
+        cusIndex = routesClone[routeIndexContainCus]
+          .map((node, i) => {
+            return {
+              stt: i,
+              node: node
+            };
+          })
+          .filter(x => x.node == apiRequest.data)[0].stt;
+        //console.log(cusIndex);
+        if (cusIndex < 2) return routesAcordId;
+        routesClone[routeIndexContainCus][cusIndex] =
+          routesClone[routeIndexContainCus][cusIndex - 1];
+        routesClone[routeIndexContainCus][cusIndex - 1] = apiRequest.data;
+        return routesClone;
+
+      case API_Request_Constants.CHUYEN_PHAI:
+        routesWithKey = routesAcordId.map(function(r, i) {
+          return {
+            stt: i,
+            nodes: r
+          };
+        });
+
+        routeIndexContainCus = routesWithKey.filter(x =>
+          x.nodes.includes(apiRequest.data)
+        )[0].stt;
+        routesClone = _.clone(routesAcordId, true);
+
+        cusIndex = routesClone[routeIndexContainCus]
+          .map((node, i) => {
+            return {
+              stt: i,
+              node: node
+            };
+          })
+          .filter(x => x.node == apiRequest.data)[0].stt;
+        if (cusIndex > routesClone[routeIndexContainCus].length - 2)
+          return routesAcordId;
+        routesClone[routeIndexContainCus][cusIndex] =
+          routesClone[routeIndexContainCus][cusIndex + 1];
+        routesClone[routeIndexContainCus][cusIndex + 1] = apiRequest.data;
+        return routesClone;
+
+      case API_Request_Constants.DOI_CHO:        let routeIndexContainCus1 = routesAcordId.find(r =>
+          r.includes(apiRequest.data[0])
+        );
+
+        let routeIndexContainCus2 = routesAcordId.find(r =>
+          r.includes(apiRequest.data[1])
+        );
+
+        routesClone = _.clone(routesAcordId, true);
+
+        let cus1Index = routesClone[routeIndexContainCus1].find(
+          apiRequest.data[0]
+        );
+
+        let cus2Index = routesClone[routeIndexContainCus2].find(
+          apiRequest.data[1]
+        );
+
+        routesClone[routeIndexContainCus1][cus1Index] = apiRequest.data[1];
+        routesClone[routeIndexContainCus2][cus2Index] = apiRequest.data[0];
+        return routesClone;
+
+      default:
+        return routesAcordId;
+    }
   }
 };
 
