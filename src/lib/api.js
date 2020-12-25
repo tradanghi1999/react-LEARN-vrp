@@ -331,27 +331,72 @@ const API = {
         routesClone[routeIndexContainCus][cusIndex + 1] = apiRequest.data;
         return routesClone;
 
-      case API_Request_Constants.DOI_CHO:        let routeIndexContainCus1 = routesAcordId.find(r =>
-          r.includes(apiRequest.data[0])
-        );
+      case API_Request_Constants.DOI_CHO: {
+        //console.log(apiRequest.data[0]);
+        let routeIndexContainCus1 = routesAcordId
+          .map(function(r, i) {
+            return {
+              stt: i,
+              nodes: r
+            };
+          })
+          .filter(x => x.nodes.includes(apiRequest.data[0]))[0].stt;
 
-        let routeIndexContainCus2 = routesAcordId.find(r =>
-          r.includes(apiRequest.data[1])
-        );
+        //console.log(routeIndexContainCus1);
+
+        let routeIndexContainCus2 = routesAcordId
+          .map(function(r, i) {
+            return {
+              stt: i,
+              nodes: r
+            };
+          })
+          .filter(x => x.nodes.includes(apiRequest.data[1]))[0].stt;
 
         routesClone = _.clone(routesAcordId, true);
 
-        let cus1Index = routesClone[routeIndexContainCus1].find(
-          apiRequest.data[0]
-        );
+        let cus1Index = routesClone[routeIndexContainCus1]
+          .map((node, i) => {
+            return {
+              stt: i,
+              node: node
+            };
+          })
+          .filter(x => x.node == apiRequest.data[0])[0].stt;
 
-        let cus2Index = routesClone[routeIndexContainCus2].find(
-          apiRequest.data[1]
-        );
-
+        let cus2Index = routesClone[routeIndexContainCus2]
+          .map((node, i) => {
+            return {
+              stt: i,
+              node: node
+            };
+          })
+          .filter(x => x.node == apiRequest.data[1])[0].stt;
+        //console.log(routesClone[routeIndexContainCus1][cus1Index]);
+        console.log(routesClone);
+        //console.log(apiRequest.data[1]);
         routesClone[routeIndexContainCus1][cus1Index] = apiRequest.data[1];
+        //console.log(routesClone[routeIndexContainCus1][cus1Index]);
+
         routesClone[routeIndexContainCus2][cus2Index] = apiRequest.data[0];
-        return routesClone;
+        //console.log(routesClone[routeIndexContainCus2][cus2Index]);
+        // console.log(routesClone);
+        return routesClone.map(function(r, i) {
+          return r.map(function(n, j) {
+            if (i == routeIndexContainCus1 && j == cus1Index) {
+              console.log("hi");
+              return apiRequest.data[0];
+            }
+
+            if (i == routeIndexContainCus2 && j == cus2Index) {
+              console.log("ui");
+              return apiRequest.data[1];
+            }
+
+            return ;
+          });
+        });
+      }
 
       default:
         return routesAcordId;
