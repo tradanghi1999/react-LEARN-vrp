@@ -462,6 +462,8 @@ const vrp = {
         //console.log("RouteFinish,RouteFinish,RouteFinish", RouteFinish);
       }
     }
+    if(RouteFinish.length == 0)
+     return this.getRoutific(routeIdex);
     return this.getRoutific(RouteFinish);
   },
 };
