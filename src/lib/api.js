@@ -12,7 +12,7 @@ import moment from "moment";
 const customer_url = "https://mwg-vrp.herokuapp.com/api/getCustomers";
 
 // du lieu random
-const order_url = "https://mwg-vrp.herokuapp.com/create/random/vehicles";
+const order_url = "https://mwg-vrp.herokuapp.com/api/getOrders";
 
 // du lieu fix cung
 const index_route_url = "https://mwg-vrp.herokuapp.com/api/getIndexRoutes";
@@ -54,7 +54,12 @@ const API = {
     return customer$;
   },
   getOrders() {
-    let order$ = from(ajax.getDb(order_url)).pipe(map(data => data));
+    let order$ = from(ajax.getJson(order_url)).pipe(
+      map(data => {
+        //onsole.log(data.orders);
+        return data.orders;
+      })
+    );
     return order$;
   },
   getVehicles() {
@@ -66,6 +71,15 @@ const API = {
       resolve(vehicles);
     });
     return from(vehiclesP).pipe(map(x => x));
+  },
+
+  getIndexRoutes() {
+    let index$ = from(ajax.getJson(index_route_url)).pipe(
+      map(d => {
+        return d.routes;
+      })
+    );
+    return index$;
   },
   getDrivers() {
     let drivers = [
@@ -139,23 +153,27 @@ const API = {
 
   getServerCordinatingResult() {
     // sau nay co the can fix lai de phu hop hon kq tu server
+
+    let rd = this.mapRenderData;
     let result$ = forkJoin(
       this.getOrders(),
-      this.getVehicles(),
+      this.getIndexRoutes(),
       this.getCustomers(),
+      this.getVehicles(),
       this.getDrivers()
     ).pipe(
-      map(([orders, vehicles, customers, drivers]) => {
-        vrp.import(orders, vehicles);
-        let routes = vrp.run(20);
-        return [orders, routes, customers, vehicles, drivers];
-      }),
-      map(([orders, routes, customers, vehicles, drivers]) => API.)
+      map(([orders, routes, customers, vehicles, drivers]) => {
+        //console.log(orders);
+        let render$ = rd(orders, routes, customers, vehicles, drivers);
+
+        console.log(render$);
+        return render$;
+      })
     );
     return result$;
   },
 
-  mapRenderData([orders, routes, customers, vehicles, drivers]){
+  mapRenderData(orders, routes, customers, vehicles, drivers) {
     let pointOnRoutes = routes.map(function(r, i) {
       return r.map(function(n, j) {
         switch (j) {
@@ -184,6 +202,8 @@ const API = {
       });
     });
 
+    /console.log('sing a song:' + pointOnRoutes);
+
     let timeTravelsOnRoutes = routes.map(function(r, i) {
       return r
         .map(function(n, j) {
@@ -202,9 +222,7 @@ const API = {
               return {
                 type: "link",
                 data: {
-                  time_text: time.getTimeText(
-                    orders[n].timetravels[r[j + 1]]
-                  ),
+                  time_text: time.getTimeText(orders[n].timetravels[r[j + 1]]),
                   time_value: orders[n].timetravels[r[j + 1]],
                   start_point: n,
                   end_point: r[j + 1]
@@ -248,7 +266,7 @@ const API = {
       };
       return d;
     });
-    //console.log(pointOnRoutes);
+
     return rRG;
   },
 
@@ -256,13 +274,11 @@ const API = {
     let result$ = forkJoin(
       this.getOrders(),
       this.getVehicles(),
+      this.getIndexRoutes(),
       this.getCustomers(),
       this.getDrivers()
     ).pipe(
-      map(([orders, vehicles, customers, drivers]) => {
-        vrp.import(orders, vehicles);
-        let routes = vrp.run(20);
-
+      map(([orders, vehicles, routes, customers, drivers]) => {
         return routes.map(r => {
           return r.map(function(nodes, i) {
             return orders[nodes].id;
@@ -274,7 +290,6 @@ const API = {
   },
 
   computeTransaction(routesAcordId, apiRequest) {
-    //console.log(apiRequest);
     let routeIndexContainCus;
     let routesClone;
     let cusIndex;
@@ -282,7 +297,6 @@ const API = {
 
     switch (apiRequest.type) {
       case API_Request_Constants.CHUYEN_TRAI:
-        console.log(apiRequest.data);
         routesWithKey = routesAcordId.map(function(r, i) {
           return {
             stt: i,
@@ -303,7 +317,7 @@ const API = {
             };
           })
           .filter(x => x.node == apiRequest.data)[0].stt;
-        //console.log(cusIndex);
+
         if (cusIndex < 2) return routesAcordId;
         routesClone[routeIndexContainCus][cusIndex] =
           routesClone[routeIndexContainCus][cusIndex - 1];
@@ -339,7 +353,6 @@ const API = {
         return routesClone;
 
       case API_Request_Constants.DOI_CHO: {
-        //console.log(apiRequest.data[0]);
         let routeIndexContainCus1 = routesAcordId
           .map(function(r, i) {
             return {
@@ -348,8 +361,6 @@ const API = {
             };
           })
           .filter(x => x.nodes.includes(apiRequest.data[0]))[0].stt;
-
-        //console.log(routeIndexContainCus1);
 
         let routeIndexContainCus2 = routesAcordId
           .map(function(r, i) {
@@ -379,25 +390,19 @@ const API = {
             };
           })
           .filter(x => x.node == apiRequest.data[1])[0].stt;
-        //console.log(routesClone[routeIndexContainCus1][cus1Index]);
-        console.log(routesClone);
-        //console.log(apiRequest.data[1]);
+
         routesClone[routeIndexContainCus1][cus1Index] = apiRequest.data[1];
-        //console.log(routesClone[routeIndexContainCus1][cus1Index]);
 
         routesClone[routeIndexContainCus2][cus2Index] = apiRequest.data[0];
-        //console.log(routesClone[routeIndexContainCus2][cus2Index]);
-        // console.log(routesClone);
+
         return routesClone.map(function(r, i) {
           return r.map(function(n, j) {
             if (i == routeIndexContainCus1 && j == cus1Index) {
-              //console.log("hi");
-              return apiRequest.data[0];
+              return apiRequest.data[1];
             }
 
             if (i == routeIndexContainCus2 && j == cus2Index) {
-              //console.log("ui");
-              return apiRequest.data[1];
+              return apiRequest.data[0];
             }
 
             return n;

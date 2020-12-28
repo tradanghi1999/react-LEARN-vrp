@@ -48,7 +48,7 @@ export default function fetchRoutes() {
     return (dispatch) => {
       return API.getServerCordinatingResult().toPromise()
         .then((response) => {
-           
+           console.log(response);
           dispatch(receiveData(response));
         //   console.log("hahha",response)
         })
