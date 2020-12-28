@@ -12,6 +12,9 @@ import reducer from "./reducers";
 
 import API from "./lib/api";
 
+
+//API.getIndexRoutes().subscribe(console.log);
+
 API.getRoutesAcordId().subscribe(routesAcordId => {
   //console.log(routesAcordId);
   // console.log(

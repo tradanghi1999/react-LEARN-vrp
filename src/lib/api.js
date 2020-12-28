@@ -163,112 +163,117 @@ const API = {
       this.getDrivers()
     ).pipe(
       map(([orders, routes, customers, vehicles, drivers]) => {
-        //console.log(orders);
-        let render$ = rd(orders, routes, customers, vehicles, drivers);
+        let pointOnRoutes = routes.map(function(r, i) {
+          return r.map(function(n, j) {
+            switch (j) {
+              case 0:
+                return {
+                  type: "point",
+                  subtype: "depot"
+                };
+              case r.length - 1:
+                return {
+                  type: "point",
+                  subtype: "end"
+                };
+              default:
+                return {
+                  type: "point",
+                  subtype: "customer",
+                  data: {
+                    id: orders[n].id,
+                    name: customers.filter(x => x.id == orders[n].id)[0].name,
+                    service_time: orders[n].order.ServiceTime,
+                    weight: orders[n].order.weight
+                  }
+                };
+            }
+          });
+        });
 
-        console.log(render$);
-        return render$;
+        //console.log('sing a song:' + pointOnRoutes);
+
+        let timeTravelsOnRoutes = routes.map(function(r, i) {
+          return r
+            .map(function(n, j) {
+              switch (j) {
+                case r.length - 1:
+                  return {
+                    type: "link",
+                    data: {
+                      time_text: "0",
+                      time_value: -1,
+                      start_point: r.length - 1,
+                      end_point: -1
+                    }
+                  };
+                default:
+                  return {
+                    type: "link",
+                    data: {
+                      time_text: time.getTimeText(
+                        orders[n].timetravels[r[j + 1]]
+                      ),
+                      time_value: orders[n].timetravels[r[j + 1]],
+                      start_point: n,
+                      end_point: r[j + 1]
+                    }
+                  };
+              }
+            })
+            .filter(x => x.data.time_value != -1);
+        });
+
+        let rG = routes.map(function(r, i) {
+          return utils
+            .interleave(pointOnRoutes[i], timeTravelsOnRoutes[i])
+            .filter(function(n, j) {
+              if (n == null) return false;
+              return true;
+            });
+        });
+
+        let rRG = rG.map((x, i) => {
+          let driver;
+          if (drivers[i] == null)
+            driver = {
+              id: 0,
+              name: "Unknown",
+              total_inMonth: 0,
+              total_inDay: 0
+            };
+          else {
+            driver = _.clone(drivers[i], true);
+          }
+          let d = {
+            capacity_percentage: (
+              pointOnRoutes[i]
+                .filter(x => x.subtype == "customer")
+                .map(x => x.data.weight)
+                .reduce((a, b) => a + b) / vehicles.weight_limit
+            ).toFixed(2),
+            driver: driver,
+            routeG: x
+          };
+          return d;
+        });
+
+        console.log(rRG);
+        return rRG;
       })
     );
+    //   map((orders, customers, vehicles, drivers) => {
+    //     console.log(orders);
+    //     //let render$ = rd(orders, routes, customers, vehicles, drivers);
+
+    //     //return render$;
+    //   })
+    // );
+    console.log(result$);
     return result$;
   },
 
-  mapRenderData(orders, routes, customers, vehicles, drivers) {
-    let pointOnRoutes = routes.map(function(r, i) {
-      return r.map(function(n, j) {
-        switch (j) {
-          case 0:
-            return {
-              type: "point",
-              subtype: "depot"
-            };
-          case r.length - 1:
-            return {
-              type: "point",
-              subtype: "end"
-            };
-          default:
-            return {
-              type: "point",
-              subtype: "customer",
-              data: {
-                id: orders[n].id,
-                name: customers.filter(x => x.id == orders[n].id)[0].name,
-                service_time: orders[n].order.ServiceTime,
-                weight: orders[n].order.weight
-              }
-            };
-        }
-      });
-    });
-
-    /console.log('sing a song:' + pointOnRoutes);
-
-    let timeTravelsOnRoutes = routes.map(function(r, i) {
-      return r
-        .map(function(n, j) {
-          switch (j) {
-            case r.length - 1:
-              return {
-                type: "link",
-                data: {
-                  time_text: "0",
-                  time_value: -1,
-                  start_point: r.length - 1,
-                  end_point: -1
-                }
-              };
-            default:
-              return {
-                type: "link",
-                data: {
-                  time_text: time.getTimeText(orders[n].timetravels[r[j + 1]]),
-                  time_value: orders[n].timetravels[r[j + 1]],
-                  start_point: n,
-                  end_point: r[j + 1]
-                }
-              };
-          }
-        })
-        .filter(x => x.data.time_value != -1);
-    });
-
-    let rG = routes.map(function(r, i) {
-      return utils
-        .interleave(pointOnRoutes[i], timeTravelsOnRoutes[i])
-        .filter(function(n, j) {
-          if (n == null) return false;
-          return true;
-        });
-    });
-
-    let rRG = rG.map((x, i) => {
-      let driver;
-      if (drivers[i] == null)
-        driver = {
-          id: 0,
-          name: "Unknown",
-          total_inMonth: 0,
-          total_inDay: 0
-        };
-      else {
-        driver = _.clone(drivers[i], true);
-      }
-      let d = {
-        capacity_percentage: (
-          pointOnRoutes[i]
-            .filter(x => x.subtype == "customer")
-            .map(x => x.data.weight)
-            .reduce((a, b) => a + b) / vehicles.weight_limit
-        ).toFixed(2),
-        driver: driver,
-        routeG: x
-      };
-      return d;
-    });
-
-    return rRG;
-  },
+  mapRenderData(orders, routes, customers, vehicles, drivers) {},
 
   getRoutesAcordId() {
     let result$ = forkJoin(
