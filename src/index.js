@@ -17,7 +17,8 @@ API.getRoutesAcordId().subscribe(routesAcordId => {
   console.log(
     API.computeTransaction(routesAcordId,{
       type: "DOI_CHO",
-      data: [122264,954188]
+      data: [122264,954188],
+      
     }))
 });
 

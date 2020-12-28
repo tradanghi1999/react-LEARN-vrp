@@ -272,6 +272,7 @@ const API = {
   },
 
   computeTransaction(routesAcordId, apiRequest) {
+    console.log(apiRequest);
     let routeIndexContainCus;
     let routesClone;
     let cusIndex;
@@ -393,7 +394,7 @@ const API = {
             }
 
             if (i == routeIndexContainCus2 && j == cus2Index) {
-              console.log("ui");
+              //console.log("ui");
               return apiRequest.data[1];
             }
 
