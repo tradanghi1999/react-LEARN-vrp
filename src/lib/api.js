@@ -6,6 +6,7 @@ import _ from "lodash";
 import vrp from "./vrp";
 import time from "./time";
 import utils from "./utils";
+import moment from "moment";
 
 // du lieu goc
 const customer_url = "https://mwg-vrp.herokuapp.com/api/getCustomers";
@@ -25,19 +26,22 @@ const API_Request = {
   chuyenTrai(cusId) {
     return {
       type: API_Request_Constants.CHUYEN_TRAI,
-      data: cusId
+      data: cusId,
+      datetime: moment()
     };
   },
   chuyenPhai(cusId) {
     return {
       type: API_Request_Constants.CHUYEN_PHAI,
-      data: cusId
+      data: cusId,
+      datetime: moment()
     };
   },
   doiCho(cusId1, cusId2) {
     return {
       type: API_Request_Constants.DOI_CHO,
-      data: [cusId1, cusId2]
+      data: [cusId1, cusId2],
+      datetime: moment()
     };
   }
 };
@@ -393,7 +397,7 @@ const API = {
               return apiRequest.data[1];
             }
 
-            return ;
+            return n;
           });
         });
       }
