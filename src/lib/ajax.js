@@ -14,7 +14,7 @@ const ajax = {
   },
   getDb(url) {
     return this.getJson(url)
-      .then(async data => data.data)
+      .then(async data => data.orders)
       .then(async db =>
         db.map(item => {
           let x = {};
