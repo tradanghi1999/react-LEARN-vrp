@@ -388,7 +388,7 @@ const API = {
         return routesClone.map(function(r, i) {
           return r.map(function(n, j) {
             if (i == routeIndexContainCus1 && j == cus1Index) {
-              console.log("hi");
+              //console.log("hi");
               return apiRequest.data[0];
             }
 
