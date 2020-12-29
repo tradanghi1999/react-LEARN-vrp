@@ -54,10 +54,10 @@ const API = {
     return customer$;
   },
   getOrders() {
-    let order$ = from(ajax.getJson(order_url)).pipe(
+    let order$ = from(ajax.getDb(order_url)).pipe(
       map(data => {
         //onsole.log(data.orders);
-        return data.orders;
+        return data.;
       })
     );
     return order$;

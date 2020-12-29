@@ -10,20 +10,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import reducer from "./reducers";
 
-import API from "./lib/api";
 
+const order_url = "https://mwg-vrp.herokuapp.com/api/getOrders";
 
-//API.getIndexRoutes().subscribe(console.log);
-
-API.getRoutesAcordId().subscribe(routesAcordId => {
-  //console.log(routesAcordId);
-  // console.log(
-  //   API.computeTransaction(routesAcordId,{
-  //     type: "DOI_CHO",
-  //     data: [122264,954188],
-      
-  //   }))
-});
 
 const logger = createLogger({
   // ...options
