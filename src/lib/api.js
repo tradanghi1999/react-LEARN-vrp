@@ -299,6 +299,15 @@ const API = {
     return result$;
   },
 
+
+  toRoutesAccordId(orders, routes){
+return routes.map(r => {
+          return r.map(function(nodes, i) {
+            return orders[nodes].id;
+          });
+        });
+  },
+
   computeTransaction(routesAcordId, apiRequest) {
     let routeIndexContainCus;
     let routesClone;
