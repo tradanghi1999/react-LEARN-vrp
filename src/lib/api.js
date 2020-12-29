@@ -159,7 +159,7 @@ const API = {
   ) {
     switch (apiRequest.type) {
       default:
-        return getRootServerCoordinatingResult();
+        return this.getRootServerCoordinatingResult();
     }
     // sau nay co the can fix lai de phu hop hon kq tu server
   },
