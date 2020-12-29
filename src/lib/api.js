@@ -19,7 +19,8 @@ const index_route_url = "https://mwg-vrp.herokuapp.com/api/getIndexRoutes";
 const API_Request_Constants = {
   CHUYEN_TRAI: "CHUYEN_TRAI",
   CHUYEN_PHAI: "CHUYEN_PHAI",
-  DOI_CHO: "DOI_CHO"
+  DOI_CHO: "DOI_CHO",
+  GOC: "GOC"
 };
 
 const API_Request = {
@@ -57,7 +58,7 @@ const API = {
     let order$ = from(ajax.getDb(order_url)).pipe(
       map(data => {
         //onsole.log(data.orders);
-        return data.;
+        return data;
       })
     );
     return order$;
@@ -151,9 +152,19 @@ const API = {
     return from(driverP).pipe(map(x => x));
   },
 
-  getServerCordinatingResult() {
+  getServerCordinatingResult(
+    apiRequest = {
+      type: API_Request_Constants.GOC
+    }
+  ) {
+    switch (apiRequest.type) {
+      default:
+        return getRootServerCoordinatingResult();
+    }
     // sau nay co the can fix lai de phu hop hon kq tu server
+  },
 
+  getRootServerCoordinatingResult() {
     let rd = this.mapRenderData;
     let result$ = forkJoin(
       this.getOrders(),
@@ -276,14 +287,8 @@ const API = {
   mapRenderData(orders, routes, customers, vehicles, drivers) {},
 
   getRoutesAcordId() {
-    let result$ = forkJoin(
-      this.getOrders(),
-      this.getVehicles(),
-      this.getIndexRoutes(),
-      this.getCustomers(),
-      this.getDrivers()
-    ).pipe(
-      map(([orders, vehicles, routes, customers, drivers]) => {
+    let result$ = forkJoin(this.getOrders(), this.getIndexRoutes()).pipe(
+      map(([orders, routes]) => {
         return routes.map(r => {
           return r.map(function(nodes, i) {
             return orders[nodes].id;
