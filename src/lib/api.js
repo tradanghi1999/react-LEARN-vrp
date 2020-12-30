@@ -169,6 +169,24 @@ const API = {
         }
         return this.getRootServerCoordinatingResult();
       default:
+        let orders = this.orders;
+        let routes = this.routes;
+        let customers = this.customers;
+        let vehicles = this.vehicles;
+        let drivers = this.drivers;
+
+        let oldRouteIds = this.toRoutesAccordId(orders, routes);
+        let newRoutesIds = this.computeTransaction(oldRouteIds, apiRequest);
+        let newRoutes = this.toRouteIndex(orders, newRoutesIds);
+
+        let render = this.mapRenderData;
+        let resultP = new Promise(function(rs, rj) {
+          let result = render(orders, newRoutes, customers, vehicles, drivers);
+          rs(result);
+        });
+
+        return from(resultP).pipe(map(x => x));
+
     }
     // sau nay co the can fix lai de phu hop hon kq tu server
   },
@@ -316,7 +334,103 @@ const API = {
     return result$;
   },
 
-  mapRenderData(orders, routes, customers, vehicles, drivers) {},
+  mapRenderData(orders, routes, customers, vehicles, drivers) {
+    let pointOnRoutes = routes.map(function(r, i) {
+      return r.map(function(n, j) {
+        switch (j) {
+          case 0:
+            return {
+              type: "point",
+              subtype: "depot"
+            };
+          case r.length - 1:
+            return {
+              type: "point",
+              subtype: "end"
+            };
+          default:
+            return {
+              type: "point",
+              subtype: "customer",
+              data: {
+                id: orders[n].id,
+                name: customers.filter(x => x.id == orders[n].id)[0].name,
+                service_time: orders[n].order.ServiceTime,
+                weight: orders[n].order.weight
+              }
+            };
+        }
+      });
+    });
+
+    //console.log('sing a song:' + pointOnRoutes);
+
+    let timeTravelsOnRoutes = routes.map(function(r, i) {
+      return r
+        .map(function(n, j) {
+          switch (j) {
+            case r.length - 1:
+              return {
+                type: "link",
+                data: {
+                  time_text: "0",
+                  time_value: -1,
+                  start_point: r.length - 1,
+                  end_point: -1
+                }
+              };
+            default:
+              return {
+                type: "link",
+                data: {
+                  time_text: time.getTimeText(orders[n].timetravels[r[j + 1]]),
+                  time_value: orders[n].timetravels[r[j + 1]],
+                  start_point: n,
+                  end_point: r[j + 1]
+                }
+              };
+          }
+        })
+        .filter(x => x.data.time_value != -1);
+    });
+
+    let rG = routes.map(function(r, i) {
+      return utils
+        .interleave(pointOnRoutes[i], timeTravelsOnRoutes[i])
+        .filter(function(n, j) {
+          if (n == null) return false;
+          return true;
+        });
+    });
+
+    let rRG = rG.map((x, i) => {
+      let driver;
+      if (drivers[i] == null)
+        driver = {
+          id: 0,
+          name: "Unknown",
+          total_inMonth: 0,
+          total_inDay: 0
+        };
+      else {
+        driver = _.clone(drivers[i], true);
+      }
+      let d = {
+        capacity_percentage: (
+          pointOnRoutes[i]
+            .filter(x => x.subtype == "customer")
+            .map(x => x.data.weight)
+            .reduce((a, b) => a + b) / vehicles.weight_limit
+        ).toFixed(2),
+        driver: driver,
+        routeG: x
+      };
+      return d;
+    });
+
+    //console.log(rRG);
+    return rRG;
+  },
 
   getRoutesAcordId() {
     let result$ = forkJoin(this.getOrders(), this.getIndexRoutes()).pipe(
@@ -335,6 +449,13 @@ const API = {
     return routes.map(r => {
       return r.map(function(nodes, i) {
         return orders[nodes].id;
+      });
+    });
+  },
+  toRouteIndex(orders, routesId) {
+    return routesId.map(r => {
+      return r.map(function(nodes, i) {
+        return orders.findIndex(x => x.id == nodes);
       });
     });
   },
