@@ -158,7 +158,7 @@ const API = {
     }
   ) {
     switch (apiRequest.type) {
-      default:
+      case API_Request_Constants.GOC:
         return this.getRootServerCoordinatingResult();
     }
     // sau nay co the can fix lai de phu hop hon kq tu server
