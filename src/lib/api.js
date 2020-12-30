@@ -159,19 +159,51 @@ const API = {
   ) {
     switch (apiRequest.type) {
       case API_Request_Constants.GOC:
+        let setCoord = d => {
+          this.coord = d;
+        };
+        if (this.coord == null) {
+          let coord$ = this.getRootServerCoordinatingResult();
+          coord$.subscribe(d => setCoord(d));
+          return coord$;
+        }
         return this.getRootServerCoordinatingResult();
+      default:
     }
     // sau nay co the can fix lai de phu hop hon kq tu server
   },
 
   getRootServerCoordinatingResult() {
     let rd = this.mapRenderData;
+    let orders$ = this.getOrders();
+    let indexRoutes$ = this.getIndexRoutes();
+    let customer$ = this.getCustomers();
+    let vehicles$ = this.getVehicles();
+    let drivers$ = this.getDrivers();
+
+    orders$.subscribe(o => {
+      this.orders = o;
+    });
+    indexRoutes$.subscribe(r => {
+      this.routes = r;
+    });
+    customer$.subscribe(c => {
+      this.customers = c;
+    });
+
+    vehicles$.subscribe(v => {
+      this.vehicles = v;
+    });
+    drivers$.subscribe(d => {
+      this.drivers = d;
+    });
+
     let result$ = forkJoin(
-      this.getOrders(),
-      this.getIndexRoutes(),
-      this.getCustomers(),
-      this.getVehicles(),
-      this.getDrivers()
+      orders$,
+      indexRoutes$,
+      customer$,
+      vehicles$,
+      drivers$
     ).pipe(
       map(([orders, routes, customers, vehicles, drivers]) => {
         let pointOnRoutes = routes.map(function(r, i) {
@@ -299,13 +331,12 @@ const API = {
     return result$;
   },
 
-
-  toRoutesAccordId(orders, routes){
-return routes.map(r => {
-          return r.map(function(nodes, i) {
-            return orders[nodes].id;
-          });
-        });
+  toRoutesAccordId(orders, routes) {
+    return routes.map(r => {
+      return r.map(function(nodes, i) {
+        return orders[nodes].id;
+      });
+    });
   },
 
   computeTransaction(routesAcordId, apiRequest) {
