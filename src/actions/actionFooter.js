@@ -2,14 +2,14 @@ import API from "../lib/api";
 import fConstants from "../constants/constantFooter";
 
 export const choseCustomer = (data) => {
-  console.log(data)
+  //console.log(data)
   return {
     type: fConstants.CHOSE_CUSTOMMER,
     data,
   };
 };
 export const choseCustomerCtrl = (data) => {
-  console.log(data)
+  //console.log(data)
   return {
     type: fConstants.CHOSE_CUSTOMMER_CTRL,
     data,

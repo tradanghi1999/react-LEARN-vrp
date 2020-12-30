@@ -301,7 +301,7 @@ const API = {
           return d;
         });
 
-        console.log(rRG);
+        //console.log(rRG);
         return rRG;
       })
     );
@@ -312,7 +312,7 @@ const API = {
     //     //return render$;
     //   })
     // );
-    console.log(result$);
+    //console.log(result$);
     return result$;
   },
 

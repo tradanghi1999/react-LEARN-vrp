@@ -15,7 +15,7 @@ export const getInitialDetailOrders = () => {
         dispatch(actionInitialDetailOrders(response.data.orders));
       })
       .catch((error) =>
-        console.log("Fetch Initial Detail Orders Axios Error", error)
+        /console.log("Fetch Initial Detail Orders Axios Error", error)
       );
   };
 };
